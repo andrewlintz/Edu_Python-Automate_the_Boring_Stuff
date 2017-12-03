@@ -1,0 +1,55 @@
+While Loops:
+
+Key Words: 
+- While
+- iteration
+- While vs If
+- Infinite Loops
+- Ctrl+c
+- Break Statements
+- Continue Statements
+
+1.
+While Loops
+You can Make a block of code execute over and over again so long as the While statement is True.
+
+	1_while_example.py
+
+2.
+Iteration
+iteration: when an execution runs through a loop. The execution of the loop is an iteration. 
+
+3.
+While vs IF statements
+
+	- If: at the end of the IF Statement block, the program continues on with the rest of the program
+
+	- While: at the end of the While Statement block, the programs jumps back to the start of the while statement, AND rechecks the condition of that statement. If the condition is still True, then it will continue to reenter the While block. It will keep doing that loop until the first time the condition of the While statement is False. And then it continues on with the rest of the program. 
+
+4.
+	4_youName.py is an example of Input Validation.
+
+5.
+Infinite Loops & Ctrl+c
+Control + C is a keyboard interrupt error.  It causes the program to crash and stop it immediately. 
+
+	5_infinite_loop.py
+
+6.
+Break Statement: Used inside loops. Causes the Execution to immediately jump out of the loop. Doesn’t check the condition. It just immediately goes to the first line immediately after the end of the loop block. 
+
+Break Statements are pretty useful if you have several different places with in a while loop that could possibly cause the execution to leave from that point. 
+
+	6_BREAK_example.py
+
+7.
+Continue Statement: Used inside loops, when a program execution reaches an Continue Statement, the execution immediately jumps back to the start of the loop and reevaluates the the While Loop’s condition. 
+
+	7_Continue_example.py
+
+RECAP: 
+- When the execution reaches the end of a while statement’s block, it jumps back to the stat to re-check the condition. 
+- Press Ctrl+c to interrupt an infinite loop.
+- A Break Statement causes the execution to immediately leave the loop, without re-checking the condition.
+- A Continue Statement causes the execution to immediately jump back to the start of teh loop and re-check the condition. 
+

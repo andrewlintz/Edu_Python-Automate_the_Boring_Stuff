@@ -1,0 +1,96 @@
+For Loops:
+
+Key Words:
+
+- For Loops
+- i
+- Gauss Total (example of For Loop Story)
+- While Loops (example of doing a For Loop equivalent using a Wile Loop)
+- range function 
+- range object
+- Range with 1 argument	range(10)
+- Range with 2 arguments	range(15, 21)
+- Step argument			range(50, 101, 2)
+- Negative Step argument	range(1001, -1, -100) 
+- Break & Continue with For Loops 
+
+1. 
+For Loops: iterates a specific number of times. (as oppose to the While Loop as long as a condition is True).
+
+
+	For Loops: iterates a specific # of times
+	WhileLoops: iterates until the condition is False
+
+2. 
+2_For_Loop_Example_fivetimes.py
+
+The code is looped 5 times. 
+i  is a variable that is set to the value 0 on the first loop. 
+it iterates the print call
+after Python finishes the iteration of all the code inside the clause, the execution goes back to the top of the loop. And the For statement will set the i value to 1. It loops on until the end of the Range. 
+
+3. 
+Another For Loop example: Carl Friedrich Gauss. 
+When Gauss was a boy, a teacher wanted to give the class some busy work, so the teach told the students to add up all the numbers from 0 - 100. 
+
+0 +1+2+3…100
+
+Gauss came up with a cleaver trick to come up with the answer in a few seconds.
+You can do this with Python’s For Loop:
+
+3_Gauss_Total_Addition_For_Loop.py
+
+4.
+while Loop Equivalent of a for Loop 
+
+You can use a while loop to do the same thing as a for loop. Its just that the for loop is more concise for the intended objective of the program. 
+
+4_While_Loop_Example_fivetimes.py
+
+5. 
+Range Function : range(10) returns a value called Range Object:  range(0,10)
+
+Range object: a data type value representing a sequence of integers through a range 
+
+5_Range_Function_example.py
+
+6.
+Range
+
+Some functions can be called with multiple arguments separated by a comma, and range is one of these functions. So this lets you change integers into range to follow any sequence of integers, including having the starting number starting else where other that 0. 
+
+6_Range_Example_fivetimes12-15
+
+Range can have multiple arguments (more than just 2)
+With 2 arguments:
+	the first number is where the For Loop variable i sequence will start. 
+	the second number is where it For Loop variable i sequence will stop.  it’ll 
+go up to by not include the value. 	
+	a third argument number is the Step Argument
+
+7
+Step Argument 
+
+Step Argument is the amount the variable is increased after each iteration.
+
+7_Step_Argument_Range_example.py
+
+ 
+
+8
+Negative Step Argument 
+
+You can even use a negative number in the step argument in the For Loop count down, instead of counting up.
+
+8_Negative_Step_Argument_example
+
+9 Note that you can use Break & Continue statements inside For Loops and the work just the same as in While Loops. 
+
+
+RECAP
+
+- For Loops will Loop a specific number of Times
+- The range() function called with one, two, or three arguments.
+- Break and Continue can be used in For Loops. 
+
+

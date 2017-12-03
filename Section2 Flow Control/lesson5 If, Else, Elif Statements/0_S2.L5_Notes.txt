@@ -1,0 +1,35 @@
+If Else Elif Statements: 
+
+Key Words:
+- Flow Control Statements
+- if Statements
+- Condition
+- Condition = Expression
+- pythontutor.com/visualize.html
+- Block
+
+1.
+Flow Control Statements
+
+	The simplest Flow Control Statements are IF and Else
+
+
+2.
+IF Statements
+	
+	The expression of an If Statement is called a Condition. Condition is just a name of an expression in a flow control Statement. Technically a Condition and Expression are the same thing.
+
+	Condition = Expression 
+
+	If the condition in an If Statement evaluates to True, the execution enters into the indented code that follows. If the condition is False, the execution skips the indented code. 
+
+	2_if_example.py
+
+
+3.
+Blocks
+	A block is made up of lines of code that are indented at the same level. The indentation is how python tells what part is inside the If statements block and what isn’t. A block begins when the indentation increases and ends when the indentation returns to it’s previous level. Blank lines are ignored for the sake of look at what’s in and not in the block. 
+
+
+RECAP:
+-

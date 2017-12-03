@@ -1,0 +1,120 @@
+Flow Carts: 
+
+Key Words:
+- Flow Charts
+- Flow Control Statements
+- How to represent the Yes & No Options
+- Boolean Values 
+- Comparison Operators
+- == vs =
+- Boolean Operators
+- AND
+- OR 
+- NOT
+
+
+1.
+Flow Charts
+	Start at the Start box, flow the arrows till you get to the end box. You can take a different path depending on different conditions. A flow chart is a good representation of how an execution should move around in a program. 
+
+2.
+Flow Control Statements
+	Instructions that can decide which python instruction to execute under which conditions.
+
+
+3.
+How to represent the Yes & No Options. 
+
+	Requires: 
+	- Boolean Values
+	- Comparison Operators
+	- Boolean Operators
+
+4.
+Boolean Values 
+	Data type that only has two values: True & False.  Integers effectively have an infinite number of values. Like any other value, Boolean values are used in expressions and can be stored in variables; just be sure to use Capital T & F and the rest of the word in lower case.  
+
+5.
+Comparison Operators
+
+	Operator	Meaning
+1.	==		Equal to
+2.	!=		Not Equal to
+3.	<		Less Than
+4.	>		Greater Than
+5.	<=		Less than or equal to
+6.	>=		Greater than or equal to
+
+	Expressions with Comparison Operators evaluate to a boolean value.
+
+examples:
+	42 == 42 		reduces to True
+	42 == ‘Hello’ 		reduces to False
+	42 == 41		reduces to False
+	2 != 3			reduces to True
+	42 < 100		reduces to True
+	42 > 100		reduces to False
+	42 < 42 		reduces to False
+	42 <= 42		reduces to True
+
+	myAge	= 26
+	myAge < 30		reduces to True
+
+	41 == ’42’		reduces to False
+
+	42.0 == 42		reduces to True
+
+6.
+== vs = 
+
+	Equal Operator has 2 equal signs. “is Equal to” has two signs like “Not equal to”
+	Variable Assignment Operator has 1 equal sign. Spam = 42
+
+7.
+Boolean Operators
+
+	And OR & NOT
+8. 
+AND Operator
+
+	The AND Operator evaluates an expression to True is both Boolean Values are True, otherwise it evaluates to False. 
+
+	Truth Table: 
+		True and True  		evaluates to True
+		True and False 		evaluates to False
+		False and True 		evaluates to False
+		False and False		evaluates to False
+
+9.
+OR Operator 	
+	
+	The OR Operator evaluates an expression to True if either or both of the Boolean Values is True. As long as it’s not False or False, it’ll be True
+	
+	Truth Table:
+		True or True		evaluates to True
+		True or False		evaluates to True
+		False or True		evaluates to True
+		False or False		evaluates to False
+10. 
+NOT Operator
+
+	The NOT Operator evaluates an express to the opposite Boolean Value. 
+
+	Truth Table
+		not True		evaluates to False
+		not False 		evaluates to True
+
+
+	You’ll often mix Boolean Operators & Comparison Operators together in the same expression. 
+
+	myAge = 26
+	myPet = ‘cat’
+	myAge > 20 and myPet == ‘cat’	evaluates to True
+
+
+RECAP:
+
+- Boolean Data Type: True, False
+- Comparison Operators: ==,!=, <, >, <=, >=
+- == is comparison, = is assignment
+- Boolean Operators: AND, OR, NOT
