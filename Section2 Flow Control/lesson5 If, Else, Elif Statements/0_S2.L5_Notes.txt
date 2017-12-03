@@ -30,6 +30,9 @@ IF Statements
 Blocks
 	A block is made up of lines of code that are indented at the same level. The indentation is how python tells what part is inside the If statements block and what isn’t. A block begins when the indentation increases and ends when the indentation returns to it’s previous level. Blank lines are ignored for the sake of look at what’s in and not in the block. 
 
+what
+
+
 
 RECAP:
 -
