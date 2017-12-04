@@ -1,0 +1,44 @@
+Writing Your Own Functions: 
+
+Key Words:
+- Function
+	- def statment 
+	- de duplicating code
+	- Arguments
+-
+
+
+1.
+Functions, Num value, Keyword Arguements
+
+2.
+Creating your own Functions
+
+	You are already familiar with these functions: 
+		print()
+		input()
+		len()
+
+	Python provides several built-in functions like these, but you can also write your own functions. 
+
+	A Function is like a Mini-program in the program. 
+	It contains code that executes when the function is called. Just like your program contains instructions to execute when it is run.
+
+	Let’s look at an example: 
+
+	2_first_own_function_example.py
+
+	- def statment to defined a new function. Whenever we call the function’s name the execution jumps to the top of the function, and executes the code inside of it.  
+
+	- de duplicating code, get rid of duplicate copied paste code. Deduplicating code makes your program shorter, easier to read, and easier to update if theres a bug. 
+
+	When you can the print or the len function, you pass in values called Arguments. These arguments go inbetween the parenthesis. 
+		len('Hello’)
+		5
+	So lets 
+
+3.
+
+
+RECAP:
+-
