@@ -5,12 +5,14 @@ Key Words:
 - Flow Control Statements
 - How to represent the Yes & No Options
 - Boolean Values 
+	- True
+	- False
 - Comparison Operators
-- == vs =
+	- == vs =
 - Boolean Operators
-- AND
-- OR 
-- NOT
+	- AND
+	- OR 
+	- NOT
 
 
 1.

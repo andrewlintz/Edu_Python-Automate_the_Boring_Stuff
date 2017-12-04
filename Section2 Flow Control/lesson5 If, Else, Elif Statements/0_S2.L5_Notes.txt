@@ -3,10 +3,17 @@ If Else Elif Statements:
 Key Words:
 - Flow Control Statements
 - if Statements
-- Condition
-- Condition = Expression
-- pythontutor.com/visualize.html
-- Block
+	- Condition
+	- Condition = Expression
+	- pythontutor.com/visualize.html
+	- Block
+	- Block = Clauses
+- Else Statements
+- Elif Statements
+- Truthy and Falsey Values
+- bool() Function
+
+
 
 1.
 Flow Control Statements
@@ -28,11 +35,60 @@ IF Statements
 
 3.
 Blocks
-	A block is made up of lines of code that are indented at the same level. The indentation is how python tells what part is inside the If statements block and what isn’t. A block begins when the indentation increases and ends when the indentation returns to it’s previous level. Blank lines are ignored for the sake of look at what’s in and not in the block. 
+	A block is made up of lines of code that are indented at the same level. The indentation is how python tells what part is inside the If statements block and what isn’t. A block begins when the indentation increases and ends when the indentation returns to it’s previous level. Blank lines are ignored for the sake of looking at what’s in and not in the block. 
 
-what
 
+	Blocks are also sometimes called Clauses.  Just like who condition is another name for expression. 
+	New Blocks begin only after statements that end with a colon.
+
+4.
+Else Statements
+
+	4_if_else_example.py
+
+	If the condition is True, then the IF block is executed and the Else block is skipped. If the condition is False, the the IF block is skipped and the Else block is executed.  
+
+	One and only one block can be executed. In an If / Else statement, one of two blocks will be executed. 
+
+5. 
+Elif Statements 
+	
+	One of Many blocks can be executed. 
+
+	5_elif_example.py
+
+	You can have as many Elif statements follow an If statement as you need, but the order of the Elif statements does matter. The execution enters into the First block that has a True condition. The remaining conditions won’t even be checked. 
+
+	You can also add an else statement to the end of the chain of elif statements.  The Else statement will execute if ALL of the elifs statement conditions return as False. 
+
+6. 
+Truthy and Falsey Values
+
+	6_Truthy_Value_example.py
+
+	Strings: 	Blank values = Falsey Value
+			All other values = Truthy Value
+	Integers: 	0 = Falsey
+			All other integers = Truthy Value
+	Float: 		0.0 is Falsey
+			All other integers = Truthy Value
+7.
+bool() Function
+
+	Like the Str() & Int() 
+
+	bool(0) = False 
+	bool(2) = True 
+	bool('Hello') = True
+	bool('') = False
 
 
 RECAP:
--
+
+x- An IF statement can be used to conditionally execute code, depending on whether or not the if statement’s condition is True or False. 
+
+- An ELIF (that is, “else if”) statement can follow an if statement. Its’ block executes if its condition is True and all of the previous conditions have been False. 
+
+- An Else statement comes at the end. It’s block is executed if all of the previous conditions have been Flase. 
+	
+- The Values 0, 0.0, and the empty string are considered to be Falsey values. When used in conditions they are considered False.  You can always see for yourself which values are Truthy or Falsey by passing them to the bool() function. 
