@@ -6,7 +6,10 @@ Key Words:
 - import Statements
 - from module import *
 	- *
-- 
+- sys.exit()
+- Third-Party Modules
+	- pip program 
+	- 
 
 1.
 Built-in Functions
@@ -55,3 +58,24 @@ From Module import *
 	However, using the full name makes it more readable code, since you can tell random.randint(1, 10), that randint() is inside the random module. 
   It's better to use the normal form of the import statement than the from [module] import * statement format. 
 
+5. 
+sys.exit()
+
+	How to terminate a program early, this always happens if the program execution reaches the bottom of the code instructions, but sometimes you want to stop before that. You can do this by calling the sys.exit() function. 
+
+	import sys
+	sys.exit()
+
+	5_sysexit_example.py 
+
+6.
+Third-Party Modules
+	
+	Python comes with several modules with it’s Standard Library. It can also install new modules to add on functionality, these are called third-party modules and you can install them using the pip program, which also comes with python. 
+
+	pip program must be run by the Command line also called the terminal. 
+
+7.
+Pyperclip Module
+
+	This is the python module that gives you the ability to copy and paste text to and from the clipboard. 
