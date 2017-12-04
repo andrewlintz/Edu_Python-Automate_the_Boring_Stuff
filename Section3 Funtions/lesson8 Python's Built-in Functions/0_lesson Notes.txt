@@ -76,6 +76,31 @@ Third-Party Modules
 	pip program must be run by the Command line also called the terminal. 
 
 7.
-Pyperclip Module
+Installing: Pyperclip Module
 
 	This is the python module that gives you the ability to copy and paste text to and from the clipboard. 
+
+	Install pyperclip module by:
+		
+		pip3 install pyperclip
+	
+	Test to see that it’s install and ready by going to IDLE and entering in:
+		import pyperclip
+
+	If no error is returned, it is installed & ready. If errors are returned, investigate.
+
+8. 
+pyperclip.copy()
+pyperclip.paste()
+
+	So pyperclips has a couple of functions for copying and pasting text. 
+
+	8_pyperclipCopyPaste_ThirdPartyModule_example.py
+
+
+RECAP 
+
+- You can import modules and get access to new functions
+- The modules that come with Python are called the standard library, but you can also install third-pary modules using the pip tool.
+- The sys.exit() function will immediately quit your program.
+- The pyperclip third-party module as copy() and paste() functions for reading and writing text to the clipboard. 
