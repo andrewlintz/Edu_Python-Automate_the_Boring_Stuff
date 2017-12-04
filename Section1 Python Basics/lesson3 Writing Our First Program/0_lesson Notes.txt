@@ -1,56 +1,19 @@
-Python’s Built-in Functions: 
+[Name of Lesson] : 
 
 Key Words:
-- Built-in Functions
-- Standard Library Module
-- import Statements
-- from module import *
-	- *
-- 
+-
+-
+-
+
 
 1.
-Built-in Functions
 
-	All Python programs can call a basic set of functions called a Built-in Functions. 
 
-	print()
-	input()
-	len()
-	
 2.
-Standard Library
-
-	Python also comes with a set of modules called: Standard Library.  
-
-	Each module is a python program that contains a related group of functions that can be used in your programs. For example, the math module has math related functions. The random module has random number related functions. etc. 
 
 
 3.
-Import Statements 
-
-	Before you can use the functions in a module, you must first import the module with an import statement. 
-
-	For example in the interactive shell, you can import the random module to call it’s randint().
-	
-	3_Import_example_randit_functin.py
-
-		import random
-		random.randint(1, 10)
-	
-	Since the random function is inside the random module, you have to first type, “random.” in front of the function name to tell python to look inside the random module for the function. Randint is not a built-in function. It only exists inside the random module. Which is why you have to have the module’s name in front of it before you can call it. 
-
-	You can import multiple modules by just separating them with a comma. 
-
-		import random, sys, os, math
 
 
-4. 
-From Module import *
-
-	The alternative form of the import statement is the "from module import *" statement. * means import everything. This also imports the random module, but now you don’t have to type our the “random.” in order to call the “randint” function. 
-
-		from random import *
-		randint(1, 10) 
-
-	However, using the full name makes it more readable code, since you can tell random.randint(1, 10), that randint() is inside the random module. 
-  It's better to use the normal form of the import statement than the from [module] import * statement format. 
+RECAP:
+-
