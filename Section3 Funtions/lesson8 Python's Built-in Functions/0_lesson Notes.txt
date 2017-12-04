@@ -54,3 +54,4 @@ From Module import *
 
 	However, using the full name makes it more readable code, since you can tell random.randint(1, 10), that randint() is inside the random module. 
   It's better to use the normal form of the import statement than the from [module] import * statement format. 
+
