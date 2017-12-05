@@ -55,7 +55,7 @@ Pre-amble
 6.
 4. You CAN use the same name for different variables if they are in different scopes. 
 
-	@4:13	6_Same_Var_Nabme_Multi_Local_Scope_example.py
+	@4:13	6_Same_Var_Name_Multi_Local_Scope_example.py
 
 7.
 2. Code in the local scope CAN access global variables.
@@ -75,7 +75,26 @@ Pre-amble
 9.
 Global Statements
 
-	What if you want to assign a new value to a global variable from inside a function? In order to do so, you have to add a Global Statement to the top of the Function. 
+	What if you want to assign a new value to a global variable from inside a function? In order to do so, you have to add a Global Statement to the top of the Function. This tells python even though you have an assignment statement for a variable inside a function, the variable the will always refer to the global variable. Don't create a seperate local variable. 
 
-RECAP:
-- yo im not seeing this change. 12345
+Why have Scopes at All?
+
+	The benefit that local scope provide is that they separate the functions code from the rest of the program. If something goes wrong b/c some variable has a bad value, there's only a limited area you have to check for this bug. If something going wrong with the global scope b/c of a bad variable, you only have to check the code in the global scope. IF something is going bad inside a function b/c of a variable, you only have to check the function's scope. The code in the global scope, or a different functions local scope, can't directly effect that functions local variables. 
+
+	9_Global_Statements_example.py
+
+10. 
+Black Boxes
+
+	Local scopes let you treat functions as black boxes. all that matters is the arguments that you pass into the function when you call it, and the return value that the function call returns. As long as the function's code is working, the rest of your program doesn't have to worry about it's code in variables. 
+
+
+
+RECAP
+
+- A Scope can be thought of as an area of the source doce, and as a container of variables.
+- The Global Scope is code outside of all functions. Variables assigned here are global variables.
+- Each funtion's code is in its own local scope. Variables assigned here are local variables. 
+- Code in the global scope cannot use any local variables.
+- code in the function's local scope cannot use variables in any another function's local scope. 
+- If there's an assignment statement for a variable in a function, that is a local variable.  
