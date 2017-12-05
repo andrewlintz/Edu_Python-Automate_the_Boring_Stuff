@@ -1,19 +1,81 @@
 Global and Local Scopes: 
 
 Key Words:
--
--
--
+- Global
+- Local
+- Scope
+- Global Variable
+- Local Variable
+- Assignment Statements vs No Assignment Statements
+- Global Statements
 
 
 1.
+Intro
+	In Python variables inside a function can have the same name as a variable outside of the function. But they are considered two separate variables. To understand how this works you need to know about Global & Local Scopes. 
+
+	
 
 
 2.
+Global Scope vs Local Scopes
 
+
+		2_Global_vs_Local_Scope_example.py
+
+	Local Scope: Parameters and variables that are assigned in a Function are said to exist in the that function’s Local scope. 
+
+	Global Scope: Variables assigned outside of all functions are said to exist in the global scope. 
+
+	Scope covers an area of the source code. Any given line in your program is in the global or local scope. Each function has it’s own local scope. Scope is a container of variables. 
 
 3.
+Global Variable vs Local Variable
+  
+	You can also think of Scope as a container of Variables. A variable that exists in the Local Scope, is called a Local Variable. while a variable that exists in the Global Scope, is called a Global Variable. All variables are either one or the other, that is a variable cannot be both local & global variable. 
 
+	Scope is a container of variables. The Global container is created when the program starts, and is destroyed when the program terminates. A local scope is created whenever a Function is Called, and all variable assigned during this call exist with in that local scope. When the function Returns the local scope is destroyed and these variables are forgotten. 
+
+4. 
+Pre-amble
+
+	Scopes matter for a couple of reasons: 
+		1. Code in the global scope CANNOT use any local variables. 
+		2. Code in the local scope CAN access global variables. 
+		3. Code in one function’s local scope CANNOT use variables in another function’s local scope.
+		4. You CAN use the same name for different variables if they are in different scopes. 
+
+5.
+1. Code in the global scope CANNOT use any local variables. 
+
+	Consider this program which will cause an error when you run it: 
+
+	@3:00	5_Global_NOT_use_Local_example.py
+
+6.
+4. You CAN use the same name for different variables if they are in different scopes. 
+
+	@4:13	6_Same_Var_Nabme_Multi_Local_Scope_example.py
+
+7.
+2. Code in the local scope CAN access global variables.
+
+	@6:51	7_Local_CAN_access_Global_Var_example.py
+
+8. 
+
+	When you see a variable inside a function, is it a local variable or a global variable that is being read from the local scope.  The way python distinguishes between the two possibilities is that if there is an assignment Statement for a variable anywhere with in that function, it’s considered a local variable. Only if there isn’t an assignment statement that python will check to see if there is a Global variable by that name. 
+
+
+		Assignment Statement = Local variable
+		No Assignment Statement = Global variable. 
+
+	8_Global_vs_Local_variable_example.py
+
+9.
+Global Statements
+
+	What if you want to assign a new value to a global variable from inside a function? In order to do so, you have to add a Global Statement to the top of the Function. 
 
 RECAP:
 -
