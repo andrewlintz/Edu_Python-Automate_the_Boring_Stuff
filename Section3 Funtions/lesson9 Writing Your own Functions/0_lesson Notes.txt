@@ -3,13 +3,16 @@ Writing Your Own Functions:
 Key Words:
 - Function
 	- def statment 
-	- de duplicating code
-	- Arguments
--
+	- Deduplicating code
+	- Argument
+	- Parameter
+	- Return Statement
+- The None Value
+- Keyword Arguments	
 
 
 1.
-Functions, Num value, Keyword Arguements
+Functions, None value, Keyword Arguments
 
 2.
 Creating your own Functions
@@ -28,17 +31,116 @@ Creating your own Functions
 
 	2_first_own_function_example.py
 
-	- def statment to defined a new function. Whenever we call the function’s name the execution jumps to the top of the function, and executes the code inside of it.  
+	- def statement to defined a new function. Whenever we call the function’s name the execution jumps to the top of the function, and executes the code inside of it.  
 
-	- de duplicating code, get rid of duplicate copied paste code. Deduplicating code makes your program shorter, easier to read, and easier to update if theres a bug. 
-
-	When you can the print or the len function, you pass in values called Arguments. These arguments go inbetween the parenthesis. 
-		len('Hello’)
-		5
-	So lets 
+	- Deduplicating code, get rid of duplicate copied pasted code. Deduplicating code makes your program shorter, easier to read, and easier to update if theres a bug. 
 
 3.
+Arguements
+	When you call the print() or len() function, you pass in values called Arguments. These arguments go in between the parentheses. 
+		len('Hello’)
+		5
+
+4. 
+Parameter
+	So let’s check this out: 
+
+	4_Argument_example.py
+
+		def hello(name):
+			print(‘Hello ‘ + name)
+		
+		hello(‘Alice’)
+		hello(‘bob’)
+
+	In between the def statement’s parentheses, is the 'name' variable, which in this context, is called a parameter. When the function is called, the 'name' parameter is assigned the argument that is passed. 
+
+	So we define the function, we call the hello function, passing the ‘Alice’ string as the argument. And then we just execute the code inside of the function. 
+
+	On the second call to the Hello function, we pass the string ‘bob’ as the argument, the argument gets assigned to the ‘name’ parameter, and then we execute the code as normal. 
+
+	Arguement = The value passed in the function call. 
+	Parameter = The value inside the function. 
+
+
+5. 
+return Statement
+
+	When you call the len() and pass it an argument such as the string ’Hello’, the function call evaluates the integer 5; which is the length of the string you passed through the len(). Function Calls can be part of expressions, b/c they evaluate to the value returned by the function call. 
+
+Lets try the expression, 
+	
+	‘Hello has ‘ + str(len(‘hello’)) + ‘ letters in it.’
+	‘Hello has 5 letters in it.’
+
+So function calls can be a part of expressions, because the evaluate to a value returned by the function call. When creating a function using the def statement,you can specify what return value should be with a return statement. 
+
+	5_return_statement_example.py
+
+6. 
+The None Value
+
+	Since all function calls returns values, what does the print() return?  If you type the string 'Hello', this evaluates to itself 'Hello'.  But when you call print and pass it the string 'Hello', the quotes for the string are not printed.  This is because print doesn’t return the string, it just displays the string as a side effect. It actually returns a special value called None. That’s None with a capital N and lower case remaining letters, with no quotes. kindof like the True & False Boolean Values. The None value is the only value of the None type data type. It is a value that represents the lack of a value. And this comes in handy in a lot of different programs.  The thing is, in the interactive shell, None doesn’t show up if you enter it. It’s not like a string value or an integer value which gets displayed as it’s self. The interactive shell is programmed is specifically designed not to bother to printing None out. That’s because whenever we have a call to print like this: print('hello'), we want it to print the string out, we also don’t want it to show the None value that print returns. 
+
+	None
+	spam = print ()
+
+	spam
+	spam == None
+True
+
+	What you should take away from this is, every function call has a return value, even the print(). But you don’t have to have a return statement in your functions. If your function doesn’t have a return statement, the return value defaults to the None value. 
+
+7. 
+Keyword Arguments
+
+	Some functions have an argument called a Keyword Argument, these are often used for optional argument to pass to a function call. For an example, the print function usually adds a new line to end of the string it prints. 
+	
+	7.1_Keyword_Argument_example.py
+
+		print('Hello')
+		print('World')
+
+	Hello
+	World
+
+	These to strings appear on two separate lines b/c the print function automatically adds a "new line" character to the end of the string it passes. So that causes a new line to start after the Hello is print and a new line to start after the World string is printed. However, you can set the end keyword argument to change this to a different string beside the New ling Character. 
+
+	7.2_Keyword_Argument_example.py 
+
+		print('Hello', end='')
+		print('World')
+
+	HelloWorld
+
+	Similarly, when you pass multiple string values to print, the print function will automatically seperate them with a single space character. 
+
+	7.3_Keyword_Argument_example.py
+
+		print('cat', 'dog', 'mouse')
+	cat dog mouse
+
+	However, if I pass the sep keyword argument this will allow you to change the separating character. 
+
+	7.4_Keyword_Argument_example.py
+
+		print('cat', 'dog', 'mouse', sep='ABC')
+	catABCdogABCmouse
+
+	ABC appears between each word it prints out. 
+
+
+	These keywords are optional, most of the time you don’t need them. But the end & sep keyword arguments enables you to make the print function to display exactly what you want it to display. 
+
 
 
 RECAP:
--
+
+- Functions are like a mini-program inside your program
+- the main point of functions is to get rid of duplicate code
+- The def statement defines a function
+- The input to functions are arguments. The output is the return value. 
+- The parameters are the variables in between the function’s parentheses in the def statement
+- The return value is specified using the return statement. 
+- Every function has a return value. If your function doesn’t have a return statement, the default value is None. 
+- Keyword arguments to functions are usually for optional arguments. The print() function has keyword arguments end and sep. 
