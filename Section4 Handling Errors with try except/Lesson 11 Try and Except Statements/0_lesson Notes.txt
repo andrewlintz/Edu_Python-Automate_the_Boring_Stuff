@@ -1,0 +1,48 @@
+Try and Except Statements: 
+
+Key Words:
+
+- Error
+- try and except Statement
+- Input Validation
+- 
+
+
+1.
+Intro
+
+	Right now getting an error means the entire program will crash. You don't want this to happen in real world programs. Instead, you want the program to detect errors, handle them, and continue to run. 
+
+	We can make an error happen easily so in the example file, 
+	
+		1_Error_example.py
+
+	42/0 caused a division by zero error. It crashes
+
+2.
+try and except Statement
+
+		2_Try_and_Except_exmaple.py
+
+	It throws an error message. 
+	
+	Remember: Functions that return without a return statement return the None value. 
+
+	When code in the Try clause tries to divide by zero, it immediately moves to the except clause. 
+
+
+3.
+Input validation
+
+	You can also have a simple Except statement without specifying the type of error it catches and it will catch all types of errors. This code can be good for input validation. 
+
+	Say you have a program that you can enter in the number of cats you own. It might look like this: 
+
+		3_Input_Validation_example.py
+
+
+RECAP:
+
+- A divide-by-zero error happens when Python divides a number by zero. 
+- Errors cause the program to crash
+- An error that happens inside a try block will cause code in the except block to execute. That code can handle the error or display a message to the user so that the program can keep going. 
