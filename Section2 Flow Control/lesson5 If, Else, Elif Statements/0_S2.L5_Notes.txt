@@ -43,12 +43,12 @@ Blocks
 
 4.
 Else Statements
+	
+	One and only one block can be executed. In an If / Else statement, one of two blocks will be executed.
 
 	4_if_else_example.py
 
-	If the condition is True, then the IF block is executed and the Else block is skipped. If the condition is False, the the IF block is skipped and the Else block is executed.  
-
-	One and only one block can be executed. In an If / Else statement, one of two blocks will be executed. 
+	If the condition is True, then the IF block is executed and the Else block is skipped. If the condition is False, the the IF block is skipped and the Else block is executed.   
 
 5. 
 Elif Statements 
