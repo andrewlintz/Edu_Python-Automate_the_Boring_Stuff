@@ -12,6 +12,8 @@ Key Words:
 - Slice Shortcuts
 - del Statement
 - String and List Similarities
+13 The list() Function
+14 The in and not in Operators
 
 1.
 Intro
@@ -128,9 +130,51 @@ del Statement
 	spam
 	['cat', 'bat']
 
+	You can think of the del statement as the Unassignment Statement. 
+		del Statement = "unassignment" statement
+
 12.
 String and List Similarities
 
+	In the previous lessons we talked about the len function, which returns the # of characters in a string.
+
+			>>>len('Hello')
+	evaluates to:	5
+
+	You can also pass len a list to return the number of items in a list.
+
+			>>>len([1,2,3])
+	evaluates to: 	3
+
+	And just like how you could do a string concatenation, 
+			>>>'Hello ' + 'world'
+			'Hello world'
+	You can also do list concatenation with the Plus("+") operator. 
+			>>>[1,2,3] + [4,5,6]
+			[1,2,3,4,5,6]
+	And the same applies to string replicatoin. That's where we multiply a string by an integer.
+			>>>'Hello' * 3
+			HelloHelloHello
+	You can do the same thing with list replication:
+			>>>[1,2,3] * 3 
+			[1,2,3,1,2,3,1,2,3]
+	In fact, many of the type of things you can do with strings, Python lets you do with lists. You can think of a string value as list of single characters values. 
+
+13. (10:44)
+The list() Function
+
+	In fact, there's a list() function, that returns a list form of the value that you pass it. This is sort of the same thing as when you need to convert a string to an integer with the int() function: 
+			>>> int('42')
+			42
+	or convert an integer to a string with the str() function:
+			>>> str(42)
+			'42'
+	We have the list() function that we can pass a value like 'Hello', and it will return a list of the individual character values coming from the string.
+			>>> list('Hello')
+			['H', 'e', 'l', 'l', 'o']
+
+14. (11:16)
+The in and not in Operators
 	
 	
 RECAP:
