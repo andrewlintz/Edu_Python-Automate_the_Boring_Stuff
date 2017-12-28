@@ -176,8 +176,23 @@ The list() Function
 14. (11:16)
 The in and not in Operators
 
-15.
-	
+	If you need to determine whether or not a value is or isn't in a list, you can use the "in" and "not in" operators. Like other operators, the "in" and "not in" operators are used in expressions and connect two values. There's the value you are looking for, the "in" operator, and the list value of where it might be found. 
+			>>> 'howdy' in ['hello', 'hi', 'howdy', 'hey']
+			True
+	That example evaluates to True b/c the string can be found with/in the list. If we were to replace 'howdy' with 'cat' or an integer like 42, then it would return the values False. 
+	The "not in" operator does the opposite. 
+			>>> 'howdy' not in ['hello', 'hi', 'howdy', 'hey']
+			False
+
 	
 RECAP:
--
+- A list is a value that contains multiple values.
+- The values in a list are also called items.
+- You can access times in a list with it's integer index. 
+- The indexes start at 0, not 1.
+- You can also use negative indexes. -1 refers to the east item, -2 refers to the second to last item, and so on. 
+- You can get multiple items form the list using a slice.
+- The slice has two indexes. Th new list's items start at the first index and go up to, but doesn't include, the second index. 
+- The len() function concatenation, and replication work the same way with lists that they do with strings. 
+- You can convert a value into a list by passing into the list() function.
+
