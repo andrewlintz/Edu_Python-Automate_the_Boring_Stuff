@@ -1,0 +1,9 @@
+	In lesson 7 you learned using for loops to execute a block of code in a certain number of times. 
+
+		>>> for i in range(4):
+			print(i)
+		0
+		1
+		2
+		3
+	This outputs 0,1,2,3. but technically 
