@@ -1,19 +1,72 @@
-	In lesson 7 you learned using for loops to execute a block of code in a certain number of times. 
+Lesson 15: Methods, and the List Methods: index(), append(), insert(), remove(), sort() 
 
-		>>> for i in range(4):
-			print(i)
+Key Words:
+- Methods
+- The index() List Method
+- The append() and insert() List Methods
+
+
+1.
+Methods
+
+	In this lesson, i'm going to introduce a new concept, called Methods.  A Method is the same thing as a function, except it is attached or called on by certain value. I'll show you what i mean in the interactive shell: 
+
+	Let's store a list value in this variable, "spam"
+
+		>>> spam = ['hello', 'hi', 'howdy', 'Heyas']
+
+	So spam has a list with 4 values. 
+
+
+2.
+The index() List Method
+
+	All List Values have a method called index. Remember that Method is pretty much the same thing as a function. You can call the Method on the list value in "Spam"
+		>>> spam = ['hello', 'hi', 'howdy', 'Heyas']
+		>>> spam.index('hello') 
 		0
-		1
-		2
+
+	So here we are calling Index, that's the name of the method, we are going to pass it an argument, just like we would pass a function an argument. The index Method returns the index that it finds of the value that you pass it. So "Hello" is at index 0, so the index() Method returns 0. 
+
+	You can't call a Method by it's self:
+		
+		>>>index('hello')
+		Traceback (most recent call last):
+		  File "<pyshell#2>", line 1, in <module> 
+		    index('hello')
+		NameError: name 'index' is not defined
+
+	It doesn't make any sense, and python doesn't know which list you are trying to find the index to. That's why you have to call it on a value, in front of .index. 
+
+		>>> spam.index()
+
+	The method name, index(), comes after the value, or the variable that contains the value and a dot. Other than that it's pretty much the exact same thing as a function. 
+
+	Each data type has it's own set of Methods. So the list dataType, for example, has several useful methods for finding, adding, removing, and other ways of manipulating values in a list. We'll cover those in this lesson. 
+
+
+		>>> spam.index('Heyas')
 		3
-	This outputs 0,1,2,3. but technically a for loop repeats the code block once for each value in a list, or a list like value.
 
-2. (0:44)
-Range Objects and List-Like Values
+	If you ever need to find this string "Heyas" in the spam list, you can call the index() Method.  However, if the value you are searching with the index() Method doesn't exist inside the list. The index Method will raise an exception. 
 
-	Let's take a closer look at this Range Function
+		>>> spam.index('asdfja;sldjfasdf')
+		Traceback (most recent call last):
+		  File "<pyshell#2>", line 1, in <module> 
+		    spam.index('asdfja;sldjfasdf')
+		ValueError: 'asdfja;sldjfasdf' is not in list
 
-		>>>range(4)
-		range(0, 4)
+	And if you have a list with duplicate values inside a list, if you call the index() method, the Method will return the value of the first time it sees that value inside the list. Ex: 
 
-	As you can see, range(4), turns a value into a data type called a "Range Object". And Range Object are a List like values. Python considers, this range object to be similar to the list [0,1,2,3]. In fact you could 
+		>>> spam = ['zophie', 'Pooka', 'Fat-tail', 'Pooka']
+		>>> spam.index('Pooka')
+		1
+
+
+
+3.(02:43) 
+The append() and insert() List Methods
+
+
+RECAP:
+-
