@@ -212,11 +212,6 @@ The sort() List Method
 
 
 
-
-
-Lon
-512-484-0797
-
 RECAP:
 
 - Methods are functions that are "called on" values.
