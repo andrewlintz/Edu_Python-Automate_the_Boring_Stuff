@@ -1,0 +1,231 @@
+Lesson 15: Methods, and the List Methods: index(), append(), insert(), remove(), sort() 
+
+Key Words:
+- Methods
+- The index() List Method
+- The append() and insert() List Methods
+- The Remove() List Method
+- The sort() List Method
+- "ASCII-betical" Order
+
+
+
+1.
+Methods
+
+	In this lesson, i'm going to introduce a new concept, called Methods.  A Method is the same thing as a function, except it is attached or called on by certain value. I'll show you what i mean in the interactive shell: 
+
+	Let's store a list value in this variable, "spam"
+
+		>>> spam = ['hello', 'hi', 'howdy', 'Heyas']
+
+	So spam has a list with 4 values. 
+
+
+2.
+The index() List Method
+
+	All List Values have a method called index. Remember that Method is pretty much the same thing as a function. You can call the Method on the list value in "Spam"
+		>>> spam = ['hello', 'hi', 'howdy', 'Heyas']
+		>>> spam.index('hello') 
+		0
+
+	So here we are calling Index, that's the name of the method, we are going to pass it an argument, just like we would pass a function an argument. The index Method returns the index that it finds of the value that you pass it. So "Hello" is at index 0, so the index() Method returns 0. 
+
+	You can't call a Method by it's self:
+		
+		>>>index('hello')
+		Traceback (most recent call last):
+		  File "<pyshell#2>", line 1, in <module> 
+		    index('hello')
+		NameError: name 'index' is not defined
+
+	It doesn't make any sense, and python doesn't know which list you are trying to find the index to. That's why you have to call it on a value, in front of .index. 
+
+		>>> spam.index()
+
+	The method name, index(), comes after the value, or the variable that contains the value and a dot. Other than that it's pretty much the exact same thing as a function. 
+
+	Each data type has it's own set of Methods. So the list dataType, for example, has several useful methods for finding, adding, removing, and other ways of manipulating values in a list. We'll cover those in this lesson. 
+
+
+		>>> spam.index('Heyas')
+		3
+
+	If you ever need to find this string "Heyas" in the spam list, you can call the index() Method.  However, if the value you are searching with the index() Method doesn't exist inside the list. The index Method will raise an exception. 
+
+		>>> spam.index('asdfja;sldjfasdf')
+		Traceback (most recent call last):
+		  File "<pyshell#2>", line 1, in <module> 
+		    spam.index('asdfja;sldjfasdf')
+		ValueError: 'asdfja;sldjfasdf' is not in list
+
+	And if you have a list with duplicate values inside a list, if you call the index() method, the Method will return the value of the first time it sees that value inside the list. Ex: 
+
+		>>> spam = ['zophie', 'Pooka', 'Fat-tail', 'Pooka']
+		>>> spam.index('Pooka')
+		1
+
+
+
+3.(02:43) 
+The append() and insert() List Methods
+
+	To add new values to a list, use the append() and insert() Methods of a list. The append() List method adds a new value to the end of the list.
+
+		>>> spam = ['cat', 'dog', 'bat']
+		>>> spam.append('moose')
+		>>> spam
+		['cat', 'dog', 'bat', 'moose']
+
+	The insert() Method is similar, it just can insert a value at any point in the list. 
+
+		>>> spam = ['cat', 'dog', 'bat']
+		>>> spam.insert('chicken')
+		>>> spam
+		['cat', 'chicken', 'dog', 'bat']	
+		
+
+	Notice that we don't assign the return values of append & insert to the variable. These methods just return the Nun value anyway. 
+	
+	So we type
+		>>> spam.append('moose')
+	But we Don't type:
+		>>> spam = spam.append('moose')
+
+	That would actually assign the Nun value to spam, and get rid of that list entirely. 
+
+	So the list is modified "in place", so modifying a list "in place" is covered in more detail later when we talk about mutable and immutable dataTypes. But for right now, just know that you do not assign a variable an append() or insert() method, you just call the method itself. 
+
+	Methods belong to a single datatype, the append() & insert() are List Methods, and can be only called on List values. They can't be called on on things like strings & integers. 
+
+		>>> eggs = 'hello'
+		>>> eggs.append('world') 
+		Traceback (most recent call last): 
+			File "<pyshell#25>", line 1, in <module>
+				eggs.append('world')
+		AttributeError: 'str' object has no attribute 'append'
+
+	This is raise an error. That's because the 'str' datatype doesn't have a method called 'append'.
+
+
+4. (5:03)
+The Remove() List Method
+
+	List also have a Remove() Method that passes a values that you want to remove from a list that is called on. 
+
+		>>> spam = ['cat', 'bat', 'rat', 'elephant']
+		>>> spam.remove('bat')
+		>>> spam
+		['cat', 'rat', 'elephant']
+
+	Now if we try to remove a value that isn't on the list, python kicks us back an error.
+
+		>>> spam = ['cat', 'rat', 'elephant']
+		>>> spam.remove('bat')
+		Traceback (most recent call last): 
+			File "<pyshell#33>", line 1, in <module>
+				eggs.remove('bat')
+		ValueError: list.remove(x): x not in list. 	
+
+	So notice how this is different from the delete statement. If I want to delete the value at index 0. I would just say:
+
+		>>> del spam[0]
+
+	But what the remove() Method does, is that it allows you to specify a value you want to remove, rather than the index. And it'll remove this value no matter where it is in the list. Like the index() Method, if the value appears multiple times in the index, it'll remove the first instance of the value. So if i had a list like: 
+
+		>>> spam = ['cat', 'bat', 'rat', 'cat', 'hat', 'cat']
+		>>> spam.remove('cat')
+		>>> spam
+		['bat', 'rat', 'cat', 'hat', 'cat']
+
+	It'll only remove the first cat. All the other cats are still found in there. 
+
+5.(6:44)
+The sort() List Method
+
+	List with number values or list with string values can be sorted with the Sort() Method.  Say we had a list with:
+		
+		>>> spam = [2, 5, 3.14, 1, -7]
+
+	We can sort these just by calling the sort() Method
+
+		>>> spam = [2, 5, 3.14, 1, -7]
+		>>> spam. sort()
+		>>> spam
+		[-7, 1, 2, 3.14, 5]
+
+	And now all these are rearranged to be in order. 
+
+	You can do the same thing with list that have strings.  
+
+		>>> spam = ['ants', 'cats', 'dogs', 'badges', 'elephants']
+		>>> spam.sort()
+		>>> spam
+		['ants', 'badges', 'cats', 'dogs', 'elephants']
+
+	As you can see the order is now alphabetical order. 
+
+	And you can pass a keyword argument to sort, "reverse" keyword argument which takes a boolean value. So you can say (reverse=True), which means, "I want this sorted in reverse. 
+
+		>>> spam.sort(reverse=True)
+		>>> spam
+		['elephants', 'dogs', 'cats', 'badgers', 'ants']
+
+	So now it's in reverse order.  
+
+	Not that you can't sort order lists that have both numbers & string values. Python doesn't really know how to compare these values, so if i had a list:
+
+		>>> spam = [1,2,3, 'Alice', 'Bob']
+		>>> spam.sort()
+		Traceback (most recent call last): 
+		  File "<pyshell#55>", line 1, in <module>
+		    spam.sort()
+		TypeError: unorderable types: str() < int()
+
+	This gives us an error message,"saying, idk how to sort this, does A come before the number 1."
+
+6. (8:31)
+"ASCII-betical" Order
+
+	Technically, it doesn't use Alphabetical Order, it uses something called the ASCII-betical Order. And it's pretty much the same thing, it just means that upper case characters come before lowercase characters. I'll show you what i mean:
+
+		>>> spam = ['Alice', 'Bob', 'ants', 'badgers', 'Carol', 'cats']
+		>>> spam.sort()
+		spam 
+		['Alice', 'Bob', 'Carol', 'ants', 'badgers', 'cats']
+
+	We sort this and something odd happens, All the uppercase letters come first, while all the lower case characters comes after the uppercase.   This is weird b/c technically capital 'Z' comes before lowercase 'a'.  Now if you want true alphabetical order sorting, there's a keyword argument that you can pass to the list. So lets say we have a list: 
+
+		>>> spam = ['a', 'z', 'A', 'Z']
+		>>> spam.sort()
+		>>> spam
+		['A', 'Z', 'a', 'z']
+
+		The capital letters come fist, But you could pass the keyword "key=str.lower", this is technically passing the convert into lowercase method, which we'll go over in a future lesson. 
+
+		>>> spam.sort(key=str.lower)
+		>>> spam
+		['A', 'a', 'Z', 'z']
+
+		"key=str.lower" will make it sort in true alphabetical order.  
+
+
+
+
+
+Lon
+512-484-0797
+
+RECAP:
+
+- Methods are functions that are "called on" values.
+- The index() list method returns the index of an item in the list. 
+- the append() list method adds a value to the end of a list. 
+- the insert() list method adds a value anywhere inside a list. 
+- the remove() list method removes an item, specified by the value, from a list.
+- the sort() list method sorts the items in a list 
+- the sort() method's reverse=True keyword argument can sort in reverse order. 
+- Sorting happens in "ASCII-betical" order. To sort normally, pass key=str.lower.
+- These list methods operate on the list "in place", rather than returning a new list value. 
+
