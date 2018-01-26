@@ -1,19 +1,224 @@
-Lesson 16 Similarities of List and Strings : 
+Lesson 16 Similarities Between Lists List and Strings : 
 
 Key Words:
--
--
--
 
+1 Similarities Between Lists and Strings
+2 Mutable and Immutable Data Types
+3 Creating New Strings from Slices
+4 The difference between immutable and mutable comes up with "references", explained next. 
+5 References
+6 Immutable values don't have this problem because they can't be modified "in place". They can only be replaced by new values.
+7 Passing List in Function Calls
+8 The copy.deepcopy() Function
+9 Line Continuation
+10 Line Continuation Slash \
 
 1.
+Similarities Between Lists and Strings
+
+	Lists aren't the only datatypes that represent order sequence of values. For example stings and lists are actually similar if you consider a string to be a list of single character strings. In fact, you can even see that by passing a string to the list() function to convert it to a list:
+
+		>>> list('Hello')
+		['H', 'e', 'l', 'l', 'o']
+
+	Many of the things you can do with you can also do with strings: Indexing, Slicing, using them with a For Loop, the len() function, the in and not in Operators.  If I had a string stored in name, you can use indexing to pick out individual characters from them: 
+
+		>>> name = "Zophie"
+		>>> name[0]
+		'Z'
+
+	or slices to pick out multiple characters:
+
+		>>> name[1:3]
+		'op'
+
+	use negative indexes
+		
+		>>> name[-2]
+		'i'
+
+	you can even use the in and not in operators
+	
+		>>> 'Zo' in name
+		True
+
+		>>> 'xxx' in name
+		False
+	
+		>>> for letter in name:
+			print(letter)
+		Z
+		o
+		p
+		h
+		i
+		e
 
 
-2.
+2. (1:16)
+Mutable and Immutable Data Types
+
+	But lists and strings are different in a important way. A list value is a "Mutable" datatype. It can have values added, removed, or changed. However, a string value is "Immutable" it cannot be changed. This is why, if you had something like:
+
+		>>> name = 'Zophie the cat'
+		
+	You can use indexing to access a letter from that string. But can't reassign a letter in a string:
+
+		>>> name[7]
+		't'
+		>>> name[7] = 'x'
+		Traceback (most recent call last):
+		  File "<pyshell#12>", line 1, in <module>
+		    name[7] = 'x'
+		TypeError: 'str' object does not support item assignment
+
+	Remember, Strings in python are immutable. They can't be changed. 
 
 
-3.
+3. (1:52)
+Creating New Strings from Slices
+
+	The proper way to modify a string is to create a new string using Slices. So if I had a string: 
+
+		>>> name = 'Zophie a cat'
+		
+And i wanted to change it to "Zophie the cat', what i'll have to do is create a new string. I'll have to store that in a new variable called newName. You'll have to use slices to pick out the parts of the old string that you want. 
+
+		>>> newName = name[0:7] + 'the' + name[8:12]
+		>>> newName
+		'Zophie the cat'
+
+	Now this might seem a bit overly complicated, it'd be nice if python would just let you change this, but there's an important difference between mutable and immutable values in python. 
+
+4 (2:53) 
+The difference between immutable and mutable comes up with "references", explained next. 
+
+5 (2:55)
+References
+	So as you seen before, variables store strings and integers like this:
+
+		>>> spam = 42
+		>>> cheese = spam
+		>>> spam = 100
+		>>> spam
+		100
+		>>> cheese
+		42
+
+	This is basically, whatever value this expression, cheese = spam, evaluates to, is the value that gets copied into the "cheese" variable.
+
+	But Lists don't quite work this way.  When you assign a list to a variable, you are actually assigning a list reference to the variable. Now reference is value that points to some bit of data like a list. Here's some code in the interactive shell to make this easier to understand:
+
+	Say i have a variable "spam" that contains a list of integers:
+
+		>>> spam = [0, 1, 2, 3, 4, 5]
+
+	And now i was to assign the variable "cheese" that list, spam. 
+
+		>>> cheese = spam 
+
+	This is similar to what we did above with integers. And now lets say, "I'm going to change the item at index 1 to "hello"
+
+		>>> cheese[1] = 'Hello!'
+		>>> cheese
+		[0, 'Hello!', 2, 3, 4, 5]
+
+	This makes a lot of sense, we had assigned cheese to spam's list, and we just changed that so that the "hello!" string was in index 1.  But here's something that is really weird, if you look at the spam variable, it's also been changed.
+
+		>>> spam
+		[0, 'Hello!', 2, 3, 4, 5]
+
+	We never had, spam[1] = 'Hello!', we only modified this cheese variable. So why is spam being modified as well? This is because, when you assigned this list value to spam, python committed this list to the computer's memory but it assigned a reference to this list to spam. So what this expression, cheese = spam,  evaluates to is a reference that gets copied to cheese.  Even though we have two separate references, they're referencing the same list, which is why when you modify the list that is referred to by "cheese", you're also modifying the list that's referenced by spam. Because they are the same list.
+
+	Figure 4.4 might make this a bit easier to understand. 
+
+	You don't store mutable values inside a variable, you store a reference to that mutable values. 
+
+6 (6:54)
+Immutable values don't have this problem because they can't be modified "in place". They can only be replaced by new values.		
+
+7 (6:56)
+Passing List in Function Calls
+
+	So let bring up one case where this could lead to bugs if you don't have a clear understanding of what's happening with references. I'm going to open up an new file editor and make a new program: 
+
+		7_passing_list_in_function_call_ex.py
+
+	We have a function called "eggs", it takes some parameter "someParameter", that will be a list. And we will call the append() method. So essentially this eggs function doesn't really do anything except just calls the append method. 
+
+	So lets have a list that we store in a variable called, "spam"; [1, 2, 3]. And lets pass it to the eggs function. Now if you remember from our previous lesson about global & local scopes, you might think, "oh, right, whenever we might pass a value to some function, like, eggs(spam), that's just copying it to the parameter which exists inside a local scope of this function, so after this function returns, someParamete local variable will get destroyed, and all the changes that were made to it are also gone with it. 
+
+	But that is not what happens here. We can print out spam. When we print this out, it looks like this spam list, the changes that we made to it inside the eggs function, are actually reflected outside the function. So here in this print() Function call that's in the global scope, it's still seeing the change made in the parameter of the local scope. That's kind of weird. But let's think about this. 
+
+	Spam stores a reference to this list variable. And when we pass a copy of that reference, to assign it to someParameter, this is just like when we had "spam = cheese" above, So the reference here refers to the same list in the global "spam" list variable. So even though it's true that the cheese variable gets destroyed after this function returns, but since it was make a change to the same list that "spam" refers to, the changes in "spam" are reflected outside of the function. 
+
+	So if you don't really understand references and what's going on, this can lead to all sorts of weird bugs where you are thinking, "oh that's weird, I thought that print(spam) would just print out [1, 2, 3], cuz i don't make any changes to it, expect inside this local scope, which should be contained inside that function." 
+	
+	So just remember, for mutable dataTypes, such as lists, you are actually storing a reference to that list inside the variable. And when you call a function, or do an assignment, you are actually just copying a reference to it, so it's actually referring to the same list. And any method calls or things that you do that modify that list "in place", such as .append, .insert, .remove Methods, are going to be operating on that particular list. 
+
+	So you might ask, "okay, I see that we have mutable and immutable dataTypes, and those are important because of references, and those are important because if we don't understand that it could lead to unexpected bugs appearing in our code, but why does python have this complicated reference system, to begin with?" 
+
+	And well, you have to consider, list can be huge. In our code right here, it just has 3 integers. That's only a few bytes of your computer memory.  But say that this was 4Billion integers instead of these three, then it would be huge problem to copy that entire list with all 4 Billion values every time you make a function call. 
+
+	So as a sort of default short cut, it just stores this list once and instead just assigns a really cheap and easy to handle list reference to that variable. And the list reference gets copied b/c it's just a few bytes of memory, it just points to what would be a Gigantic 4 billion item list. And so that's really a computationally cheap thing for the computer to do. And that's why python has that set up that way. 
+
+8 (11:27)
+The copy.deepcopy() Function
+
+	This is all well and good, but sometimes you might want to have a completely separate list. So how can you do that, well, there's a module called the Copy Module, you can import. And the copy module as a function called deepcopy which can make a total copy of this list. So it doesn't just copy the reference to that list it actually creates a new list, that just happens to have the same values here, and it returns a reference to the new list. 
+
+	So if we had:
+
+		>>> import copy
+		>>> spam = ['A', 'B', 'C', 'D']
+		>>> cheese = copy.deepcopy(spam)
+		>>> cheese[1] = 42
+		>>> cheese
+		['A', 42, 'C', 'D']
+		>>> spam
+		['A', 'B', 'C', 'D']
+
+9 (13:03)
+Line Continuation
+
+	Here's one more list concept that is fairly easy to understand. So in most cases the amount of indentation for a line of code in python tells what block it is in. But there is an exception to this rule, for example lists can actually span multiple lines of code. 
+
+		>>> spam = ['apples',
+			     'oranges',
+			     'bananas',
+			     'cats']
+
+
+	Python is not looking at indentation with in the list thinking it's in a separate block, python is smart enough to know that you are still in the middle of typing out the list, you just want to make the code a little bit more readable by having everything line up in format. And it'll consider that to be a single line of code. This in particular is nice because, if you have several dozen values, you don't need to cram it all in one line that just starts wrapping around. You can just make your code a little bit easier to read. 
+
+	In fact you can to do this, even when you don't have lists, by using the "slash line continuation" character: "\".
+			
+
+		>>> \
+
+	This is not the same thing as the division operator "/", So you can have code that says:
+
+		>>> print('Four scorer and seven' + \
+			'years ago')
+		Four score and seven years ago
+		>>> print('Four scorer and seven' + 'years ago')
+		Four score and seven years ago
+
+
+	
 
 
 RECAP:
--
+
+- Strings can do a lot of the same things lists can do, but strings are immutable.
+- Immutable values like strings and tuples cannot be modified "in place". 
+- Mutable values like lists can be modified in place. 
+- Variables don't contain lists, they contain references to lists. 
+- When passing a list argument to a function, you are actually passing a list reference.
+- Changes made to a list in a function will affect the list outside the function. 
+- the \ line continuation character can be used to stretch Python instructions across multiple lines. 
+
+References are explained very well in Ned Batchelderr's talk, 
+"Facts and myths about Python names and values" 
+  25-minute video at: https://youtu.be/_AEJHKGk9ns 
+
