@@ -1,19 +1,359 @@
 Lesson 17 : The Dictionary Data Type 
 
 Key Words:
--
--
--
 
+01 Dictionaries 
+02 Key
+03 Key-Value Pair
+04 Dictionaries are unordered
+05 KeyError
+06 in & not in
+07 The keys(), values(), and items() Dictionary Methods
+08 The get() Dictionary Method
+09 The setdefault() Dictionary Method
+10 Character Counting Program Example
+11 The pprint Module 
 
 1.
+Dictionaries
+
+	In this lesson we are going to cover the Dictionary dataType. Like a list a Dictionary is a collection of many values. But unlike list indexes, indexes for dictionaries can use many different dataTypes, not just integers. 
 
 
-2.
+2. (0:24)
+Keys
+
+	Indexes for Dictionaries are called "Keys",
+
+3. (0:24)
+Key-Value Pairs
+
+	and a key and it's associated value is called a "Key Value Pair". 
+
+	Let's type in a small dictionary and save it to the "myCat" variable. So in code, a dictionary is typed by curly brackets: "{}", inside the curly brackets are the "Key-Value Pairs". So I'll have a string value for a key, "'size'" and have a colon ":", and it's value will be the string value "'fat'". And you can have multiple key value pairs by separating them with commas. So we'll have another key, "'color'", separated by it value ": 'gray'", and another key value pair separated by a comma. 
+
+		>>> myCat = {'size': 'fat', 'color': 'gray', 'disposition': 'loud'}
+
+	This dictionary's keys are the strings: 'size', 'color', & 'disposition', the values are: 'fat', 'gray', 'loud'. And this will a dictionary value that describes my cat, so I store it in a variable called "myCat". 
+
+	You can access these values through their keys, just like a list. So square bracket, and then i'll type the key, and this evaluates to that key's value in the dictionary. 
+
+		>>> myCat['size']
+		'fat'
+
+	So you can use this in any expression. Like the following example has some string concatenation to create this string: "My cat has gray fur."
+
+		>>> 'My cat has ' + myCat['color'] + ' fur.'
+		'My cat has gray fur.
+
+	And dictionaries can still use integer values as keys, just like lists uses integers for indexes. But they don't have to start at zero, and they can be any number. So you can have a dictionary that has 12345 for the "key", and it's value will be 'luggage combination', and then another "key", 42, and it's value: 'the Answer'.
+
+		>>> spam = {12345: 'Luggage combination', 42: 'The Answer'}
+
+4 (2:19)
+Dictionaries are unordered
+
+	Unlike lists, items within dictionaries are unordered. The first item in a list, "spam", out be spam[0]. But there is not "fist item" in a dictionary. While the oder for an item matters for determining if two lists are the same. Such as comparing the list [1, 2, 3] and [3, 2, 1]
+
+		>>> [1, 2, 3] == [3, 2, 1]
+		False
+
+	You can see that these are false, even though they have the same content, the order matters for lists, but for dictionaries, that's not the case.
+  
+		>>> eggs = {'name': 'Zophie', 'species': 'cat', 'Age": 8}
+		>>> ham = {'species': 'cat', 'name': 'Zophie', 'Age": 8}
+		>>> eggs == ham
+		True
+
+	Dictionaries might be a poor name for this dataType, b/c it's not like the keys are in alphabetical order; like the words in a real dictionary. But you can think of the key-value pair being like the word & definition pairs in a real dictionary. If you know the word, you can get the definition. If you know the key, you can get the value. 
+
+5 (4:00)
+KeyError
+
+	Trying to access a key that doesn't exist in a dictionary will result in a "Key Error" error message.  Much like when list's out of range index error message. So if i tried eggs['color'], there is no 'color' key in the eggs dictionary so i get key error.
+
+		>>>eggs['color']
+		Traceback (most recent call last): 
+		  File"<pyshell#10>", line 1, in <module>
+		    eggs['color']
+		KeyError: 'color'
+
+6 (4:15)
+in & not in
+
+	And you can check to see if a key exists in a dictionary value with the "in & not in" operators. So i can try to check the "'name'" key or the name string value exists as a key in the dictionary in "eggs". And it does!
+
+		>>> 'name' in eggs
+		True
+		>>> eggs
+		{'name': 'Zophie', 'species': 'cat', 'Age": 8}
+
+	Or if we try the "not in" operator, we'll get false because its false that 'name' is not in the dictionary in "eggs".
+
+		>>> 'name' not in eggs
+		False
 
 
-3.
+	Keep in mind that dictionaries are mutable, like lists. Variables hold references to dictionary values. Variable don't hold the dictionary value itself. 
+
+7 (4:54)
+The keys(), values(), and items() Dictionary Methods
+
+	There are three dictionary methods that will turn list like values of the Dictionary: keys, values, or both keys & values.  And these are:
+
+The keys() Method,
+
+		>>> list(eggs.keys())
+		['name', 'species', 'age']
+
+The values() Method, 
+	
+		>>> list(eggs.values())
+		['Zophie', 'cat', 8]
+
+The items() Method
+
+		>>> list(eggs.items())
+		[('name', 'Zophie'), ('species', 'cat'), ('age', 8)]
+
+	Which actually returns a list of two items tuples, of the key of the fist item, and the value as the second items. 
+
+	And the methods actually return list like dataTypes.
+
+		>>>eggs.keys()
+		dict_keys(['name', 'species', 'age']) 
+
+	You can see the keys() method returns a dict_keys, so if you want to return an actual list like keys, you have to pass that value to the list function, and that will return a list value. 
+
+	You can use these methods in for loops. You can say, for k in eggs.keys():, print(k):
+
+		>>> for k in eggs.keys():
+			print(k)
+		name
+		species
+		age
+
+	Now you can print them all out here, You can use each key in the eggs dictionary inside that for loop. 
+
+	And the same for all the values as well:
+
+		>>> for v in eggs.values():
+			print(v)
+		Zophie
+		cat
+		8
+
+	And you can use the multiple assignment trick, and have multiple variables in the for loop, for the items. So Remember how items is actually returns two items tuples: The first item is the key, and the second item is the value. and you store them in the "k" and "v" variables. And then print them out. 
+
+		>>> for k, v in eggs.items():
+			print(k, v)	
+		name Zophie
+		species cat
+		age 8
+
+	Otherwise, I would have the tuple values themselves assigned to the single variable:
+
+		>>> for i in eggs.items():
+			print(i)
+		('name', 'Zophie')
+		('species', 'cat')
+		('age', 8)
+
+	And it will print out the tuples. 
+
+	Just in case you missed it. Tuples are basically the exact same thing as lists, except they are immutable and they use parenthesis, instead of the square brackets. 
+
+	You can also use the "in & not it" operators to see whether a certain key or value exists in a dictionary. So we have this dictionary stored in eggs, and one of the values is the string "cat". And we can check that with "'cat in eggs.values()"
+
+		>>> eggs
+		{'name': 'Zophie', 'species': 'cat', 'Age": 8}
+		>>> 'cat' in eggs.values()
+		True
+
+	And that returns true, b/c the cat value does exist inside the dictionary as one of the key's values. 
+
+
+8 (7:35)
+The get() Dictionary Method
+
+	Now its really tedious to check if one of the keys exists in a dictionary, before accessing the key's value. You want to avoid that KeyError error message. You know if i say, "oh, does the key 'color' exist? No!?" and the Error crashes your program. 
+	
+		>>> eggs['color']
+		Traceback (most recent call last): 
+		  File"<pyshell#10>", line 1, in <module>
+		    eggs['color']
+		KeyError: 'color'
+
+	So you would have to have something like, "if 'color' in eggs:" then do something with the color key for that dictionary.
+
+		>>> if 'color' in eggs:
+		  print(eggs['color']) 
+
+	Then if 'color' doesn't exists then nothing is done, and that prevents the error message from happen, but it's really tedious to have this "if" statement every time. 
+
+	So Python gives a "get()" method that takes two arguments.  And the first argument is the key of the values to retrieve, just like we have it with 'color' that we want to retrieve. And then the second argument is a fall back default value that the method returns if that key doesn't exist in the dictionary. 
+
+	So lets take a look at the eggs dictionary. 
+
+		>>> eggs
+ 		{'name': 'Zophie', 'species': 'cat', 'Age": 8}
+
+
+	Right now we can see that we have the Key values: name, species, & age.  Let just call the get() Method and say we want to return the value of key "age" and if it doesn't exists, return 0. 
+
+		>>> eggs.get('age', 0)
+		8
+
+	Well we can see that it returns "8",  because the dictionary as the key, "age". However we could say, get the 'color' key's value and if that doesn't exist, then just return a blank string. 
+
+		>>> eggs.get('color', '')
+		'' 
+	And you can see since the 'color' key doesn't exist inside this dictionary, it'll go ahead and default to the second argument that we passed. So it returns a blank string. 
+	
+	This is really handy if you have some dictionary that keeping track of, say, how many things you are bring to a picnic. And then you have some code that says, "I am bringing" however many numbers of things. But if you are no returning anything then you want to return a default value, so in this case, the integer "Zero"; "to the picnic".  We'll have to convert the "picnicItems.get('napkins', 0)" into a string, in order to do a string concatenation on it.
+	
+		>>> picnicItems = {'apples': 5, 'cups': 2)
+			print('I am bringing ' + str(picnicItems.get('napkins', 0)) + ' to the picnic.') 
+		I am bringing 0 to the picnic. 
+		
+	So you we can see that, because napkins doesn't exist inside this dictionary, we just return the default values. So it says, I am bringing 0 to the picnic. Guess we could say, I am bringing 0 napkins to the picnic. 
+	
+	So if we didn't have the get() method, we just couldn't do this with the normal square bracket sentax, anytime we try that on a key that doesn't exist, we would end up with a KeyError error message. 
+	
+		>>> picnicItems = {'apples': 5, 'cups': 2)
+			print('I am bringing ' + str(picnicItems['napkins']) + ' to the picnic.') 
+		Traceback (most recent call last):
+		  File "<pyshell#47>", line 1 in <module>
+		    print('I am bringing ' + str(picnicItems['napkins']) + ' to the picnic.') 
+		KeyError: 'napkins'
+
+9 (10:31)
+The setdefault() Dictionary Method
+
+	The opposite of the get() method, is the setdefault() method. You'll often have to set a value in a dictionary for a certain Key, only if that key doesn't already have a value. 
+
+	It could look something like this: I have my eggs dictionary, that has the keys: names, species, and age. "if 'color' not in eggs:", then "egg['color']= black."
+
+		>>> if 'color' not in eggs: 
+			egg['color']= black.
+
+	So this will set the 'color' key to the string value, "black". But only if it doesn't already have some setting in the "eggs" dictionary. And the setdefault() method offers a way to do this in one line of code. 
+
+	Let's reset the gets dictionary. And instead, we can call the setdefault() method. And say, we want to set the 'color' key, only if it's not already set, so that it defaults to 'black'. 
+
+		>>> eggs = {'name': 'Zophie', 'species': 'cat', 'Age": 8}
+		>>> eggs
+		{'name': 'Zophie', 'species': 'cat', 'Age": 8}
+		eggs.setdefault('color', 'black') 
+		'black'
+		>>> eggs
+		{'name': 'Zophie', 'color': 'black', 'species': 'cat', 'Age": 8}
+
+	So we can see now that there is a key value pair, 'color' and the value is the string 'black'. 
+
+	Now if we try to set this to something different, say, set 'color' to orange, this actually doesn't change anything, because the 'color' key already exists. It already setting black. So calling setdefault() doesn't do anything, it doesn't change it to 'orange'. 
+
+		>>> eggs.setdefault('color', 'orange')
+		'black'
+		>>> eggs
+		{'name': 'Zophie', 'color': 'black', 'species': 'cat', 'Age": 8}
+
+	The setdefault() method is a nice short cut to ensure the key exists. 
+
+10 (12:01) 
+Character Counting Program Example
+
+	So let's create a short program that counts the number of occurrences of the the letter in a string. Go ahead and open the file editor. 
+
+			10_characterCount.py
+
+	So we'll have a variable called "message" and this will keep the string that we'll have the letters counted. So how about, "'It was a bright cold day in April, and the clocks were striking thirteen.'" We'll just have a dictionary that contains key value pairs of where the "keys" are "each letter", and the value is "how many times it appears in this message variable". 
+
+		message = 'It was a bright cold day in April, and the clocks were striking thirteen.'
+		count = {}
+	
+	So we might have a key-value pair like, 'r': 12, 'r' is the "key" and 12 is the "value" if the letter "r" appears in the string twelve times. S
+
+	So we'll just loop through each character in the message variable. Remember, a string is a list like value, so we can use it in a "for" loop and on each iteration of the loop the character variable will be assigned a single letter from this variable, "message". 
+
+		for character in message: 
+
+	But remember the count dictionary starts off completely empty, it doesn't have any "keys", but we want to make sure that it starts off at zero, before it starts counting that particular letter. So we will call a setdefault() method, and say, "okay, for whatever letter you may have start it off with a value of zero. 
+
+		for character in message:
+			count.setdefault(character, 0)
+
+	So on this first iteration, when this capital letter "I" is assigned to this variable "character", we call a count that sets default to zero, and says, "hey, if you don't have a letter "I" as a key go ahead an create the "key-value" pair and make the value "0". That ensures there are no error on the next line when we have, "let's update the count for that character, to be equal to it's current value, plus one. 
+
+		for character in message
+			count.setdefault(character, 0) 
+			count[character] = count[character] + 1
+
+	And that's the entire for loop. At the very end of the program, we'll just print out, "count".
+
+		Save & Run!
+
+		message = 'It was a bright cold day in April, and the clocks were striking thirteen.'
+		count = {}
+
+		for character in message:
+    			count.setdefault(character, 0)
+    			count[character] = count[character] + 1
+
+		print(count)
+
+	You can see, this program has quickly gone through the entire string and quickly counted up all the letters for us. So the lowercase 'w' appears two times, the uppercase 'I' appears once. 
+	
+			10.2_characterCount_v2.py
+
+	Now this program isn't completely ideal, b/c we have lowercase 'a's counted separately from Uppercase 'A's.  So let's just change this slightly, instead of going through the string message, let's call message's upper() method and go through that string. 
+
+		for character in message.upper(): 
+
+	We basically going through an uppercase version of this string. I'll save that, press f5 to run. And now we can see that there are 5 'A's, because all the lower case 'a's have been converted into uppercase.
+
+	Now if we didn't have "count.setdefault(character, 0)", method, we can just "#" comment it out, save it and run it. We'd get an error message, because the first time that we try to increment a count that doesn't exist, the key that doesn't exist is going get that "KeyError". 
+
+
+Triple Quotes '''
+
+
+	And this program will work, no matter what's inside the message variable. Even if the string is thousands, or millions of characters long. In fact, let's try that out. Go to the automatetheboringstuff.com/files/rj.txt and copy the text. It's the entire book of Shakespeare's, Romeo & Juliette. Copy it, 
+
+	Now there are quotes in the passages, so i'm going to have to use the special triple quotes tricks. Which is python's multiline string, that we'll learn in a couple lessons from now. But basically, the triple quotes allow you to escape everything automatically, and have the string go across multiple lines. We'll end that copy paste with another triple quotes '''. So this is one giant string that's being assigned to message. And then the rest of the program is just the same as before. 
+
+	Press f5 to run this, and you can see instantly see python has gone through this giant string and counted up all of this. We can see in this particular text, there's 11,051 letters 'T' in the entire Romeo and Juliette text. 
+
+	Now this output is kind of messy. This is just printing out the dictionary the value itself. If we want to actually have the letter 'A', its going to be baried somewhere in the middle, and not at the very beginning because dictionaries, as i've said before, don't have a specific order to them. So this is just basically printed out randomly. 
+
+
+11 (17:12)
+The pprint Module
+
+	  If we wanted a cleaner display of the items in a dictionary, then we could use the pprint() function in the pprint Module. This will do a pretty print of the dictionary. 
+
+	So let's modify this program a little bit. Go to the very start and we'll just import the pprint module, to get that pretty printing function. And here we will call the pprint module's pprint function to do a pretty print. That's basically the same thing as print, except when you pass it something like a list or a dictionary, it'll do a nicer looking output.  
+
+		11.1_characterCount_v4_pprint.py
+
+		pprint.pprint(count)	
+
+	You can see all the key's are in order, and it's all in a single column, that's much nicer than having it all bunched together. 
+
+	The pprint() module has also a pformat() function, which will return the string of what that pprint() would normally prints out. So if you just want it to be a string instead of printed to the screen, you can call the pprint.pformat() function. And we'll just save that to a variable "rjtext"
+
+		11.2_characterCount_v5_pformat.py
+
+		rjtext = pprint.pformat(count)
+		print(rjtext) 
+
 
 
 RECAP:
--
+ - Dictionaries contain key-value pairs. Keys are like a list's indexes.
+ - Dictionaries are mutable. Variables hold references to dictionary values, not the dictionary value itself. 
+ - Dictionaries are unordered. There is no "first" key-value pair in a dictionary. 
+ - The keys(), values(), and items() methods will return list-like values of a dictionary's keys, values, and both keys and values, respectively.
+ - The get() method can return a default value if a key doesn't exist.
+ - The setdefault() method can set a value if a key doesn't exist. 
+ - the pprint module's pprint() "pretty print" function can display a dictionary value cleanly. The pformat() function returns a string value of this output. 
