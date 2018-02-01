@@ -1,0 +1,178 @@
+Lesson 18: Data Structures
+
+Key Words:
+1. Data Structures
+2. Dictionary Data Structurer Example
+3. type() function
+
+
+1.
+Data Structures
+
+	This lesson covers the topic: Data Structures. 
+
+	Lists & Dictionaries are powerful ways of organizing data into structures your program can handle. For example, I can have a dictionary to store values about cats.  Say we store in a variable, "cat", and the dictionary contains data to describe my cat. 
+
+		>>> cat = {'name': 'Zophie', 'age': 7, 'color': 'gray'}
+	
+	And this is kind of nice, simplified version of my cat, Zophie. But its a version that a python program could understand. 
+
+	I can also have a list of these dictionaries. Say, "allCats", starts off as a blank list, i can call the append() method. And I can have a list of this dictionary. In fact i can have a list of multiple dictionaries for all my various cats. 
+
+		>>> cat = {'name': 'Zophie', 'age': 7, 'color': 'gray'}
+		>>> allCats = []
+		>>> allCats.append({'name': 'Zophie', 'age': 7, 'color': 'gray'})
+		>>> allCats.append({'name': 'Pooka', 'age': 5, 'color': 'black'})
+		>>> allCats.append({'name': 'Fat-tail', 'age': 5, 'color': 'gray'})
+		>>> allCats.append({'name': '???', 'age': -1, 'color': 'orange'})
+
+	Now the allCats variable can be used in some cat related program. 
+
+		>>> allCats
+		[{'name': 'Zophie', 'age': 7, 'color': 'gray'}, {'name': 'Pooka', 'age': 5, 'color': 'black'}, {'name': 'Fat-tail', 'age': 5, 'color': 'gray'}, {'name': '???', 'age': -1, 'color': 'orange'}]
+
+	Lists of dictionaries is called a Data Structure.  You can use data structures to model real world things in a way that a program can understand. 
+
+		
+	Tic Tac Toe Program example: 200 lines of code. It's a really simple program, but how do we represent data like he # board, using lists & dictionaries that basically put it into a version that we can stuff it into a python variable? 
+
+	The answer is, we use data structures to create a representation of this tic tac toe board.  
+
+
+
+2. (2:55)
+Dictionary Data Structurer Example
+
+	In this case, this is really simple. You can use string values to represent what is in each slot on the board, so an 'x', an 'o', or a ' '. And so you will need to store nine strings for each of the nine spaces. So we can use a dictionary value for this. The 'x', 'o', and ' ' can be the values, and the keys can be these strings: "top-L", "top-M", "top-R", and then the middle row, and then the lower row. 
+
+	This dictionary is a data structure that represents a Tic Tac Tow board. So let's store this in a variable, named "theBoard". And this will be a dictionary, and the key will be "'top-L': ' '" the value will be an empty space, to show that it's an empty space. It doesn't have to have "x" or "o". A "'top-M': ' '", "'top-R': ' '", and we can just copy and paste the rest of this. 
+
+	So here we have the board: 
+
+		>>> theBoard = {'top-L': ' ', 'top-M': ' ','top-R': ' ', 'mid-L': ' ', 'mid-M': ' ', 'mid-R': ' ', 'low-L': ' ', 'low-M': ' ','low-R': ' '} 
+
+
+	We can go ahead and pretty up as well using the pprint module. 
+
+		>>> import pprint
+		>>> pprint.pprint(theBoard)
+
+	Oh whoops I accidentally set "'mid-M'" to "x".  We can change that. Let's set that back to a single space:
+		
+		>>> theBoard['mid-M'] = ' '
+	
+	There we go. So right now, this dictionary value, remember, python just sees this as a dictionary with strings for keys, and values for the key-value pairs value.  It's doesn't actually see this as a Tic Tac Tow board. I mean, it has no concept of this has tag symbol, drawn on a sheet of paper, and people drawing 0's & X's. And whatever. To python, it's just a basic Dictionary. But we can have our program use this to represent a Tic Tac Tow Board. So currently, this represents an empty tic tac toe board game. All of these, are just single empty spaces.
+
+>>NOTE: the Strings we use for keys (or even using dictionaries in the first place) are arbitrary; as long as it's possible to represent all possible Tic Tac Toe boards with your data structure, you can use it in a Tic Tac Toe game program.   
+
+>>I use strings like 'top-L' because they're short and easy to remember. 
+
+	
+	But we can change this, let's set the middle space back into an 'x'. 
+
+		>>> theBoard['mid-M'] = 'x'
+
+	Now when we print this out, everything is blank except the 'x'.  Now this dictionary value, remember is just a typical dictionary value, but our program and treat it as a tic tac toe board that looks like this with an "x" in the center. 
+
+	And we can keep changing around this dictionary to represent the board any way that we want. So let's just set the top to be all 'o''s 
+		
+		>>> theBoard['top-L'] = 'o'
+		>>> theBoard['top-M'] = 'o'
+		>>> theBoard['top-R'] = 'o'
+
+	And maybe we'll have the mid left position set to 'x'
+		>>> theBoard['mid-L'] = 'x'
+
+	And also the lower Right set to 'x'
+
+	So now this is what the dictionary looks like. And this dictionary is a data structure for this tic tac toe board. In which we can see, "oh the 'o' player has won the game, because they have 3 in a row." 
+
+	So we have to write code that can recognize when ever there is 3 in a row inside this dictionary value. But remember, in the tic tac toe game, we didn't have just printing out this dictionary value. We have a nicer display, where it actually drew out the tic tac toe board for us. So how do we convert this dictionary into this output. And, well, we can write a function for it. 
+
+	So this function can be printBoard(board) and it will just take one of these tic tac toe dictionary dataStructures as the value for it's parameter for the board.
+
+		>>> def printBoard(board)
+		
+	And we can use a bunch of print() function calls to print all those line characters, as well as all the x's and o's. So we will print the top line here. So we'll print out whatever is in the 'top-L' position, plus that vertical line, another vertical line, and then the 'top-R'. And this will print out the first row. 
+
+		>>> def printBoard(board)
+			print(board['top-L'] + | + board['top-M'] + | + board['top-R']
+
+	And we'll need that horizontal line. 
+		
+		>>> 	print('-----') 
+
+	We'll need to print out the middle row, it's pretty similar to the top line so i'll just copy and paste it, and change it to 'mid'. 
+	
+ 
+		>>> def printBoard(board)
+			print(board['top-L'] + | + board['top-M'] + | + board['top-R']
+			>>> 	print('-----') 
+			print(board['mid-L'] + | + board['mid-M'] + | + board['mid-R']
+	
+	We'll need another horizontal row, and then the bottom row. 
+
+		>>> def printBoard(board)
+			print(board['top-L'] + | + board['top-M'] + | + board['top-R']
+			>>> 	print('-----') 
+			print(board['mid-L'] + | + board['mid-M'] + | + board['mid-R']
+			>>> 	print('-----') 
+			print(board['low-L'] + | + board['low-M'] + | + board['low-R']
+
+	So there we have it, this data structure for the tic tac toe board, we also have a function that treats that data structure and turns it into something that we humans can recognize, so that when we call "printBoard(theBoard)", it'll print out that same tic tac toe board that we recognize.
+
+		>>> printBoard(theBoard) 
+		o|o|o
+		-----
+		x|x| 
+		-----
+		 | |x
+
+	So this output can be as sophisticated as we want. We can have some fancy graphics, if we had some graphics library to do this fancy drawing. Maybe make 3D with lines that actually look like solid objects.  This is just using what we know, the print() function, to print out stings to draw simple tic tac toe board using these horizontal and vertical line characters from the keyboard. 
+
+	Because you used a data structure to represent a tic tac toe board and wrote code to interpret that data structure, you now have a program that models the tic tac toe board. This isn't a complete tic tac toe game, but you can see how computer program can have a representation of something, that just given isn't just a string or simple integer. 
+
+	Lists and dictionaries allow you to combine values to represent real world objects. 
+
+ 
+
+3. (9:40)
+The type() function
+
+	And last, let's learn about the type() function. You can pass any value to the type() function and it'll tell you the dateType of that value.  This can be really helpful in the interactive shell when you need to identify what kind of value you're dealing with. 
+
+	You can see, if I type the in the integer 42:
+
+		>>> type(42)
+		<class 'int'> 
+	
+	it replies with 'int'. 
+
+	Or we can pass it a string, it'll reply 'str'. 
+
+		>>> type('hello')
+		<class 'str'> 
+
+	or a float
+
+		>>> type(3.14) 
+		<class 'float' 
+
+	but then I can pass it something like "theBoard", and it responds, "that's a dictionary"
+
+		>>> type(theBoard) 
+		<class 'dict'> 
+
+	How about this value?
+
+		>>> type(theBoard['top-R'])
+		<class 'str'>
+	And it'll say, "oh, that's a string".
+
+	So we can tell the value at this key is a string value.
+
+	So the type() function along with that pretty print, pprint(), function are really handy to use in the interactive shell, when you need to see what data you have. 
+
+
+
+RECAP: NO RECAP
