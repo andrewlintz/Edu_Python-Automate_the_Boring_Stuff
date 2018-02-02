@@ -1,23 +1,154 @@
 Lesson 19: Advance String Syntax
 
 Key Words:
-1. More on Strins
-2.
-3.
-
+1. More on Strings
+2. Escape Characters 
+3. Raw Strings
+4. Multiline Strings with Triple Quotes
+5. Similarities Between Strings and Lists
 
 1.
 More on Strings
 	
-	Text is one of the most common form of data that your programs will handle. You already know how to concatenate two string values together with the plus operator. But python can do much more than that. 
+	Text is one of the most common form of data that your programs will handle. You already know how to concatenate two string values together with the plus operator, but python can do much more than that. 
 
-	Let's take a look at some of the ways that python lets you write, print, and access string
+	Let's take a look at some of the ways python lets you write, print, and access string in your code. Typing strings in python code is fairly straight forward. They begin and end with a single quote ' '.  'Hello'. 
 
-2. (:)
+2. (0:33)
+Escape Characters
+
+	But then, how can you use a single quote that's inside a string? For example, we have the string: "'That is Alice's cat.'"
+
+		>>> 'That is Alice's cat.'
+		SyntaxError: invalid syntax
+
+	This doesn't work because python thinks the string ends after Alice, because of that quote. And that the rest, "s cat.'" is just invalid python code. 
+
+	Fortunately, there are multiple ways to type strings. Strings can begin and end with double quotes, just as they do with single quotes. 
+
+		>>> "That is Alice's cat."
+		"That is Alice's cat."
+
+	One benefit of using double quote, is that a string can have a single quote character in it. Since the string begins with a double quote, python is smart enough to know that a single quote is just part of the string and is not indicating the end of the string. However, if you need to use both single quotes & double quotes inside the string. You'll need to use the Escape Characters. 
+
+	An escape character lets you use characters that would otherwise be impossible to put into a string. The escape character consist of a backslash "\", followed by a letter that represents which character you want to add to the string. For example, the escape character for a single quote is \'
+
+		>>> 'Say hi to Bob\'s mother.'
+		"Say hi to Bob's mother." 
+
+	Python knows since this single quote has a backslash before it, this is not a single quote meant to end the string value. Instead, it is saying, "put a literal single quote as part of this string."
+
+	Table 6.1 in the Automate book shows the different types of escape characters you'll use. 
+
+		\'	Single quote
+		\"	Double quote
+		\t	Tab
+		\n	Newline (line break)
+	 	\\	Backslash
+
+	So let's try out that newline character. Here i'm just going to have something print('Hello there!\nHow are you?\nI\'m fine.'), escaping that single quote. 
+	
+		>>> print('Hello there!\nHow are you?\nI\'m fine.')
+		Hello there!
+		How are you?
+		I'm fine. 
+
+	And this is how we can have a single print statement print out text across multiple lines. 
+		
+
+3. (3:00)
+Raw Strings
+
+	Now if you have text that includes many backslashes that don't want seen as the beginning of an escape character, you can use a raw string.
+
+	In python a raw string is the exact same thing as a normal string, except that it begins with a lower case "r" right before it.
+
+		>>> r'Hello'
+		'Hello'
+
+	So this is a valid python string. So we can have something like: 
+
+		>>>r'That is Carol\'s cat.'
+
+	And because this is a raw string, this is literally interpreted as part of the string. You can see that when it's printed out as a string value, python automatically adds that [backslash] here.
+
+		>>>r'That is Carol\'s cat.'
+		"That is Carol\\'s cat."
+
+	Let's try copying and pasting that into a print() function call.
+
+		>>> print(r'That is Carol\'s cat.')
+		That is Carol\'s cat.
+
+	You can see right now because this is a raw string the backslashes are literally a part of the string. 
+
+	The "That is Carol\\'s cat." string is a regular, non-raw string value. 
+
+	The raw strings are helpful if you are typing a string value that contains many backslashes. And this comes up in our lesson in the future in about Regular Expressions. 
+
+4 (4:04)
+Multiline Strings with Triple Quotes
+
+	Now, While we can use backslash N "\n" to put a new line into a string, it's often easier just to use multiline strings. A multiline string in python begins and ends with either three single quote characters ''', or three double quote characters """. So any quotes, tabs, or new lines in between the triple quotes are considered part of the string. So I can have like:
+
+		>>> print(""" Dear Alice, 
+		Eve's cat has been arrested for catnapping, cat burglary, and extortion.
+		Sincerely, 
+		Bob.""")
+
+	Now notice, I'm kind of breaking the rules of having one instruction per a line here. Python is smart enough to realize that, "okay, this is all one "line of code", this is just one function call, doesn't matter it's being split across multiple lines, I'm not creating new blocks or anything like that." Python is smart enough to know that, "okay, until i see another triple quotes, everything here is part of the strings, including all the new lines. 
+
+	So if we stored this string into a variable like, "spam", and we just want to display the string's contents inside spam, python would automatically format it use the "\n"'s. 
+	
+	So triple quotes are really handy if you have some gigantic string. Say i'm going to go to a new file editor window, and say, copy and paste the entire text of Romeo & Juliette, which i happen to have right here in this text file. I can click control A to select all, control c to copy, and then control v to paste it. 
 
 
-3. (:)
+	And now any backslashes, or single quotes, or new lines inside of all these new text, are just automatically seen as part of the string. It's really unlikely that it's going to see a triple double quotes inside of this string. And if there are I can just use the triple single quotes instead. 
+
+	So all of this is just one gigantic variable assignment to the spam variable. And i can treat that string just like any other string. I can print it out, but is going to be a lot to be printed out. How about we print out the length of the string to see roughly how many characters are in.
+
+
+		>>> print(len(spam))
+		174,126 
+
+5. (6:55)
+Similarities Between Strings and Lists
+
+	Strings use indexes and slices the same way lists do. You can think of a string, like 'Hello World', as kind of a list like value with each character being an item in that list. 
+
+	So if we had something like, "spam = 'Hello world!'", We can do all the same things with strings that I do with lists. 
+
+	So I can do indexes() to pick out a single letter from it. 
+
+		>>> spam[0]
+		'H'
+	
+	I can use slices to pick out a substring out of it.
+		
+		>>> spam[1:5]
+		'ello'
+	
+	I can use negative indexes to get the very last character. 
+
+		>>> spam[-1]
+		'!'
+	
+	The "in and not in" operators also work with it. so,
+	
+
+		>>> 'Hello' in spam
+		True
+
+		>>> 'x' in spam
+		False
+
+	And note that this is case sensitive, so if i look for a capital HELLO inside that string, this will return False. 
 
 
 RECAP:
--
+
+- Strings can begin and end with double quotes.
+- Escape characters let you put quotes and other characters that are hard to type inside strings. 
+- Raw strings will literally print any backslashes in the string and ignore escape characters.
+- Multiline strings begin and end with three quotes, and can span multiple lines. 
+- Indexes, slices, and the in and not in operators all work with strings. 
