@@ -1,0 +1,95 @@
+Lesson 22: Launching Python Program from Outside IDLE 
+
+Key Words:
+1. Intro
+2. Shebang Line
+3. Batch Files
+4. The PATH Environment Variable
+5. sys.argv
+
+
+1.
+	
+	In this lesson we are going to learn how to run your python scripts from outside of idle. This content comes mostly from Appendix B of Automate the Boring Stuff with Python Textbook. Which you can read at https://automatetheboringstuff.com/appendixb//
+
+	First, Congratulations! At this point you know all the basic programming concepts. The rest of this course is about how to use various modules to do cool stuff and automate various kinds of tasks. 
+
+	So you'll soon be writing these programs, let's learn a convenient way to run them. It's inconvenient to have to launch idle, open your python script, then press F5 every time you want to run them. There are faster ways to run your python scripts, though unfortunately they are different for windows and for mac & linux. 
+
+	This lesson covers windows only, but it also has some information that applies to all three operating system.
+
+2. (0:55)
+Shebang Line
+
+	The first line of all of your python programs should be a shebang line. And the shebang line should begin with the pound symbol exclamation mark, "#!", but the rest depends on your operating system. 
+
+		Windows:	#! python3
+		OS X: 	  	#! usr/bin/env python3
+		Linux: 		#! user/bin/python3
+	
+	On windows the py.exe program will read the shebang line at the top of the .py file source code, and run the appropriate version python for that script.  Strictly speaking, you don't really need the shebang line on windows. But it does tell Python to use version 3 instead of version 2; Just incase you have multiple versions installed on your computer. 
+
+	I'm going to make this a simple "Hello world" program.  And lets save this in a brand new folder. 
+
+		>>>#! python 3
+		>>>print('Hello world!')
+
+	Let's go ahead and try running this script from outside IDLE. I'm going to close IDLE and 
+	
+3. (5:17)
+Batch Files
+
+	Batch Files are also called shell scripts in other operating systems. And they basically let you run multiple commands by just running the batch file. 
+
+	All that a batch file is is just a text file with the commands saved to a file that ads with .bat. We can use IDEL's file editor to make this. 
+
+		@py c:\users\al\mypthonscripts\hello.py %*
+		@pause
+
+	The first line is going to run our python script. The @ symbol tells windows, "I don't actually want you to display this entire line when you run this program, i just want you to do it." 
+
+	And the %* tells windows, "oh yeah, forward any command line argument to this program. And I'll explain what command line arguments are in a bit. 
+
+
+	@pyw runs a window less program that doesn't make that program appear at all. So for example if you made a program that just uses text that is copied to the clipboard for input and then replaces the clipboard. Having the @pyw will prevent the CMD from flickering at all 
+
+4 (8:45)
+The PATH Environment Variable
+	
+	Still annoying to have to type out that full path at the run dialog. We can reduce it to just "hello" by adding that "MyPythonScripts" folder to the PATH Environment Variable. 
+
+	Environment variable are kind of like variables for the operating system. All the major operating systems use Environment Variables. In particular, one called PATH, Which is just a list of folders.
+
+	Right now if you try to this "hello" in the Run window, Windows would give you some error that it can't actually find the file that you are talking about. But we can add that "MyPyhtonScripts" folder to the PATH and that will make Windows check  for any hello.bat files.
+
+	So in order to do that, lets click on the windows start button, go to the control panel, go down to "system", and then click on "Advance System Settings". This will bring up system properties window, and on the advance tab, click on environment variables. Under "System variables", find the Path, and click on edit. 
+
+	Now it's a super long string and they didn't really make the text field wide enough, but just click on the home key to go to the beginning of it. And then enter in that folder name. "c:\Users\Al\MyPytonScripts;". End on that semi-colon.  That semi-colon is the separator for all the different folder names. Click on Ok and exit out. 
+
+	So now we've added "MyPythonScripts" to the PATH Environment Variable. And we only have to do that once. Even if we reboot your computer, that setting will be saved. 
+
+	Now that means we can just type Windows+R and type hello. And that will run our program. So typing hello in the Run window runs the hello.bat file 
+
+5. (10:58) 
+sys.argv
+
+	Command line arguments are typed when you run your program. For example, if i were to run 'hello' and if i specify some command line arguments (in the Run window) separated with spaces. 
+
+	Let's open up that hello.py file.  These Command Line Arguments, Also called Command Line Options, can be accessed in your code as a list of strings stored in the sys.argv variable. 
+
+	I'm just going to import the sys module, and then just print out that list by calling print(sys.argv). And this is a list value of strings, one string for each command line argument.  
+
+
+
+RECAP:
+
+- The shebang line tells your computer that you want to run the script using Python 3
+- On Windows, you can bring up the Run dialog by pressing Win+R
+- A batch file can save you a lot of typing by running multiple commands. 
+- The batch files you'll make will look like this: 
+	
+		@py C:\Users\Al\MyPythonScripts\hello.py %*
+		@pause
+
+- You'll need to add the MyPythonScripts folder to the PATH environment variable first. 
+- Command-line arguments can be read in the sys.argv list.
