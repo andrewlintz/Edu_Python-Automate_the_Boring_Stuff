@@ -1,0 +1,384 @@
+Lesson 20: String Methods pg128-141 
+
+Key Words:
+1. Sting Methods
+2. upper(), lower()
+3. isupper(), islower()
+4. 
+ - isalpha() - letters only 
+ - isalnum() - letters and number only
+ - isdecimal() - numbers only  
+ - isspace() - whitespace only 
+ - istitle() - titlecase only
+
+5. startswith(), endwith() 
+6. join()
+7. split()
+8. ljust(), rjust() 
+9. center()
+10. strip(), rstrip(), lstrip()
+11. replace()
+12. The pyperclip Module
+13. pyperclip.copy()
+    pyperclip.paste() 
+
+
+1.(0:24)
+String Methods
+	
+	Just like lesson 15 covered a lot of useful List Methods, this lesson will cove a lot of useful String Methods.  Keep in mind that unlike lists methods, the string methods return a new string value, rather than modify the string in place. Since strings are immutable, it's impossible to modify them in place anyway. 
+
+
+2. (0:42)
+upper(), lower()
+
+	So let's take a look at the upper() and lower() string methods. I can have a variable like, "spam = 'Hello world!'", and I can call that string value's upper() method. And it returns an upper case version of that string. 
+
+		>>> spam = 'Hello world!' 
+		>>> spam.upper()
+		'HELLO WORLD!'
+
+	Now remember, string values are immutable, so they can't be modified in place. Spam still contains that lower case value. 
+		>>> spam
+		'Hello world!'
+
+	If I actually want to modify the value in the variable, "spam", you would have to have something like, "spam = spam.upper()".
+
+		>>> spam = spam.upper()
+		>>> spam
+		'HELLO WORLD!'
+
+	And the lower version returns that string in all lower case. 
+
+		>>> spam.lower()
+		'hello world!'
+
+	None letter characters, like the space or the exclamation mark are completely unaffected by the upper() and lower() methods.  These methods are helpful if you need to make a case insensitive comparison. For example, if I were to making some sort of game program and I printed out, "Do you want to play again?" and I expected a Yes or No answer, you would have some code that calls the input() function, and the player will types in Yes or No. Let's say I type in "yes", "answer" stores the lower case string. 
+		
+		>>> answer = input()
+		yes
+		>>> answer
+		'yes'
+
+	The player could easily typed in capital YES. 
+
+		>>> answer = input()
+		YES
+		>>> answer
+		'YES'
+
+	And so any code that we have that looks like this, "if answer == 'yes':" lower case "yes", it would fail because this expression evaluates to false if "answer" contains capital/uppercase version of "Yes"  
+
+		>>> if answer == 'yes':
+			print('Playing again')
+		
+		>>> answer == 'yes'
+		False
+	
+		
+	So instead, we could have an expression that just automatically converts it to lower case before doing the comparison. So now it doesn't matter if "answer" contains capital "YES", or maybe lowercase and uppercase characters; this line of code will still work the same. Still have something like this and it works with any response. 
+
+		>>> answer.lower() == 'yes'
+		True
+		>>> answer = 'yEs'
+		True
+		
+		>>> if answer == 'yes':
+			print('Playing again')
+		Playing again		
+
+
+3. (3:00)
+isupper(), islower()
+
+	String Methods also have an isupper() and islower() that returns a boolean value depending on if the strings are uppercase or lowercase. 
+
+	So let me try again with storing 'Hello world!' inside of "spam".  I can call "spam.islower()" and this will return False because there is a letter character that's an uppercase: 'H'. 
+
+		>>> spam = 'Hello world!'
+		>>> spam.islower()
+		False
+
+	So i can change 'H' to a lower case, and now it returns, it evaluates to True. 
+
+		>>> spam = 'hello world!'
+		>>> spam.islower()
+		True
+
+	I can do the same thing as is upper. I'll first make this only uppercase characters. And now "spam.isupper()" will return to True. 
+
+		>>> spam = 'HELLO WOLRD!'
+		>>> spam.isupper()
+		True
+
+	Note that is I just have the blank string, both "spam.isupper()" and "spam.islower()" both returns False. There needs to be at least one uppercase or one lowercase character for isupper() or islower() to return True, respectively. 
+
+	So if i just called this on a string value like "'12345'.islower()", both islower() and isupper() will return False, because there is no letters inside this string. 
+
+	Now since the upper and lower string methods themselves return strings, you can call string methods on those returned string values, as well. Expressions that does this will look like a chain of method calls.
+
+	So if i had the string 'Hello' and call it's upper() method. It returns the string, capital 'HELLO'. And then on that string, i can in turn call is.upper, which then evaluates to a boolean value. So this entire expression evaluates to True. We have the string, 'Hello', we have it's method .upper(), and this returns a string, itself, which we call it's method .isupper(), which then returns a boolean value, True. 
+
+		>>> 'Hello'.upper()
+		'HELLO'
+		>>> 'Hello'.upper().isupper()
+		True
+
+4. (5:07)
+isalpha() - letters only 
+isalnum() - letters and number only
+isdecimal() - numbers only  
+isspace() - whitespace only 
+istitle() - titlecase only
+
+	And there are several other of these sting methods that begin with the word "is". These methods return a boolean value that describes the nature of the string. 
+	
+	We have, 
+
+ - isalpha() that returns True if the string consists of only letters and is not blank. 
+ - isalnum() which returns True if the string only consists of letters and numbers, that is, it consists of alpha numerics.  
+ - isdecimal() which returns True if only Numeric characters
+ - isspace() returns True is only space characters
+ - istitle() returns True if the string consists of with words that begin with uppercase characters, followed by only lowercase characters. 
+
+	So i'll type all of these out into the interactive shell.  We have the string method .isalpha()
+
+		>>> 'hello'.isalpha()
+		True
+		>>> 'hello123'.isalpha()
+		False
+		>>> 'hellow123'.isalnum()
+		True
+		>>> '123'.isdecimal()
+		True
+		>>> '       '.space() 
+		True
+		>>> 'Hello world!'.isspace()
+		False
+		>>> 'Hello world!'[5].isspace()
+		True
+		>>> 'Hello world!'[5]
+		' ' 
+		>>> 'This Is Title Case.'.istitle()
+		True
+		>>> 'hello world!'.title()
+		'Hello World!'
+
+	That's a lot of string methods, you don't have memorize the all. Just know they exist and you can google them. 
+
+5. (7:44)
+startswith(), endwith()	
+
+	Next, the startswith() and endswith() methods returns True if the string value that they are called on begins or ends, respectively, with a string that is passed to the method. 
+
+	So if we had a string like, 'Hello world!', we could call .startswith() and then pass it the string ('Hello'), and this will return True. 
+
+		>>> 'Hello world!'.startswith('Hello')
+		True
+
+	And we can even make much simpler, does it start with the letter 'H'. 
+
+		>>> 'Hello world!'.startswith('H')
+		True 
+
+		>>> 'Hello world!'.startswith('ello')
+		False
+
+		>>> 'Hello world!'.endswith('world!') 
+		True
+
+		>>> 'Hello world!'.endswith('world') 
+		False
+
+6. (8:48)
+join()
+
+	The join() method is useful when you have a list of strings that need to be joined together into a single string value. The join method is called on a string, gets passed a list of strings, and returns a string. 
+
+	So here's a common example. We have the string ',' and we use that to join together a list of strings. Lets say, 'cats', 'rats', 'bats'. So this method returns a string that has each of these individual strings in this list combined together and joined with the ',' string. So a comma appears between each of them. 
+
+		>>> ','.join(['cats', 'rats', 'bats'])
+		'cats,rats,bats'
+
+		>>> ''.join(['cats', 'rats', 'bats'])
+		'catsratsbats'
+		>>> ' '.join(['cats', 'rats', 'bats])
+		'cats rats bats'
+
+	Two new lines so that when you pass the string to print call. 
+
+		>>> '\n\n'.join(['cats', 'rats', 'bats'])
+		'cats\n\nrats\n\nbats'
+		>>> print('\n\n'.join(['cats', 'rats', 'bats']))
+		cats
+		
+		rats
+
+		bats
+
+7. (10:03)
+split()
+
+	The split() method does the opposite. It's called on a string value and returns a list of strings. So I can have the string, "My name is Simon". And when i call .split() on it, it returns a list, and inside this list are all the individual words from inside that string. It splits it on whitespace characters. 
+
+		>>> 'My name is Simon'.split() 
+		['My', 'name', 'is', 'Simon']
+
+	And we can have it split on other characters as well, by passing a different value to the split() method. Say I want it to split on the letter 'm' instead of on spaces. Now this list will have "My na" as the first string, it splits and cuts out the first 'm' so that everything up to the next 'm' is in the second string. And the the rest of that is the third string. This is just how it use to go up to the first space character, and then have the next string up to next space character. So you can split it on anything you want. 
+
+		>>> 'My name is Simon'.split('m')
+		['My na', 'e is Si', 'on']
+
+8. (11:06)
+ljust(), rjust() 
+
+	The rjust() and ljust() string methods will return a padded version of the string that they are called on with spaces inserted to left justify or right justify the text. So the first argument to both methods is the integer length of the justified string. 
+
+	So if I have the string, 'Hello', I can right justify it, and let's say the total length of the return string is going to be ten. So in this case python inserts as many space characters as needed to make the total length of this string to be ten. 
+
+		>>> 'Hello'.rjust(10)
+		'     Hello'
+		>>> len('     Hello')
+		10
+
+	And i can do the same thing with the ljust() method to left justify it. This will add white space padding to the end. 
+
+		>>> 'Hello'.ljust(10)
+		'Hello     '
+		>>> 'Hello'.ljust(20)
+		'Hello               '
+
+	An optional second argument can be passed to rjust() and ljust() to specify a different fill character other than a space. So if i had 'Hello'.rjust(20, '*')
+		
+		>>> 'Hello'.rjust(20, '*')
+		'***************Hello'
+		
+		>>> 'Hello'.ljust(25, '-')
+		'Hello-------------------------'
+
+		
+9 (12:26)
+center() 
+
+	And there is also a center() method, that works just like ljust() and rjust() methods, but centers the text, rather than justifying it to the left or the right of it. 
+
+		>>> 'Hello'.center(20)
+		'        Hello       '
+
+		>>> 'Hello'.center(20, '=')
+		'=======Hello========'
+
+	This is kind of nice b/c you can have a variable that contains something like "name = 'Al'", name.center(20, '='), or you can have something like a very long name, and the same code will still center the name with as many equal signs on either side as necessary.  
+
+		>>> name = 'Al'
+		>>> name.center(20, '=')
+		'=========Al========='
+
+	vs	
+
+		>>> name = 'Wendylynflsjflkreg'
+		>>> name.center(20, '=')
+		'=Wendylynflsjflkreg='
+
+	It uses the same code.
+
+
+10. (13:22)
+strip(), rstrip(), lstrip()
+
+	Sometimes you might want to strip off whitespace characters, like spaces, tabs, or new lines, from the left side, right side, or both sides of the string. 
+
+	Going back, if we had this "'Hello'.rjust(10)" having too much space on the left side of this and we want to get rid of that, we can call the strip() string methods, to remove that. 
+
+	So let's say we had that in "spam" and I can call strip() on that string to remove that white space.
+
+		>>> spam = 'Hello'.rjust(10)
+		>>> spam.strip()
+		'Hello'
+
+	Remember, this doesn't modify spam in-place. Spam still has all of that in there, it just returns a brand-new string. 
+		
+		>>> spam
+		'     Hello'
+
+	So if i wanted to change it, i would have "spam = spam.strip()"
+
+		>>> spam = spam.strip()
+		>>> spam
+		'Hello'
+
+	That'll remove white space from either side of the string
+
+		>>> '     x     '.strip()
+		'x' 
+
+	Let's say we only want to remove the whitespace from only the left side of the string, we could call .lstrip(). Or we can call .rstrip() to remove the whitespace from the right side of the string.
+
+		>>> '     x     '.lstrip()
+		'x     '
+		>>> '     x     '.rstrip()
+		'     x'
+
+	We can pass the strip() methods a string with characters that we want to remove, instead of whitespace. So if we had a variable like 'SpamSpamBaconSpamEggsSpamSpam', i can call strip() on that and pass it the letters "ampS", I can have this in any order, 'm just specifying letters not natural word. And this will remove all the capital 'S', 'p', 'a', & 'm's from either side of the string, and return that new string value.
+
+		>>> 'SpamSpamBaconSpamEggsSpamSpam'.strip('ampS')
+		'BaconSpamEggs'
+
+	Noticed how there's still a spam in the middle, that's because it removed those letters up to the first character that wasn't passed to the strip method. And then the same happened on the end side. It just went down to here, and just left "BaconSpamEggs". 
+
+
+11 (15:27)
+replace()
+
+	The replace() string method takes two arguments, a string to look for and a string to replace it with.  So if i had a string "Hello there!" stored in spam, I can call replace(), i can call every 'e' and replace with 'XYZ'. 
+
+		>>> spam = 'Hello there!'
+		>>> spam.replace('e', 'XYZ')
+		'HXYZllo thXYZrXYZ!'
+
+	And that's all the string methods that we'll cover in this lesson. 
+
+12. (15:51)
+The pyperclip Module
+
+	Let's go over one more thing. The pyperclip module has copy & paste functions that can send text to and receive text from your computer's clipboard. 
+
+	So sending the output of your program to the clipboard will make it really easy to paste it to an email, or to a word processor software, or some other program.  Pyperclip doesn't come with python. To install it follow along the instructions on how to install 3rd party modules using the PIP tool, found in appendix A.
+
+
+INSTALLING Pyperclip via PIP (via windows) 
+
+	window's key + R
+	Run CMD
+	Goto the directory where python is installed
+	Goto it's script folder
+	pip.exe stall pyperclip
+
+	This is automatically download and install it into your system. 
+
+	After installing it, you can check to see if the install worked by trying to import pyperclip and if nothing shows up (no error message), then that means it's successfully installed. 
+
+13. (17:05)
+pyperclip.copy()
+pyperclip.paste() 
+
+	And pyperclip has a copy & paste functions that can copy text to the clipboard. So say i can copy this string "('Hello!!!!!!!')". And now when i try to paste text I can see that this text was indeed copied to the clip board. 
+
+		>>>pyperclip.copy('Hello!!!!!!!')
+		
+	'Hello!!!!!!!'
+
+	Or I can call pyperclip.paste() function, and that will return the text that is already on the clipboard. So if i wanted to get that as a string value, I can just call that paperclip.paste(). 
+
+
+RECAP:
+
+- upper() and lower() return an uppercase or lowercase string.
+- isupper(), islower(), isalpha(), isalnum(), isdecimal(), isspace(), istitle() returns True or False if the string is that respective kind of string. 
+- startswith() and endswith() also return bools. 
+- ','.join(['cat', 'dog']) returns a string that combines the strings in a list
+- 'Hello world!'.split() returns a list of strings, split from the string it's called on. 
+- rjust(), ljust(), center() returns a string padded with spaces. 
+- strip(), rstrip(), lstrip() returns a string with whitespace stripped off the sides. 
+- replace() will replace all occurrences of the first string argument with the second string argument. 
+- pyperclip has copy() and paste() functions for using the clipboard. 
