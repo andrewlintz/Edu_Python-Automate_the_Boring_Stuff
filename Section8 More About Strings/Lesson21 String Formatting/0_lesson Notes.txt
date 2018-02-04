@@ -1,19 +1,48 @@
 Lesson 21: String Formatting 
 
 Key Words:
-1.
-2.
-3.
+1. Intro
+2. String Formatting
+3. Conversion Specifiers
 
 
 1.
+Intro
+
+	In this short lesson we will talk about string formatting. Normally when you want to combine strings together to form a single string value, you can use the plus operator to concatenate strings together. For example you can have 'hello ' plus 'world', and that evaluates to the single strings value: "Hello world". 
+
+		>>> 'hello ' + 'world'
+		'hello world'
+		
+	Now this can get tricky if there are several strings that you need to concatenate. Let's create several variables. 
+
+		>>> name = 'Alice'
+		>>> place = 'Main Street'
+		>>> time = '6 pm'
+		>>> food = 'turnips'
+		>>> 'Hello ' + name + ', you are invited to a party at ' + place + ' at ' + time + '. Please bring ' + food + '.'
+
+		'Hello Alice, you are invited to a party at Main Street at 6 pm. Please bring turnips.'
+
+	This expression looks really complicated, we had to type a lot of quotes and a lot of pluses, it's kind of hard to read as well. 
 
 
-2. (:)
+2. (1:35)
+String Formatting
 
+	So Python has something called String Formatting. It's also called String Interpolation. And this let's us put a "%s" inside a string to mark where we want to have other strings inserted into it. I'll show you what I mean. 
 
-3. (:)
+		>>> 'Hello %s, you are invited to a party at %s at %s. Please bring %s.' 
 
+	And then after that string, we can have "%" followed by parenthesis will have comma delimited list of variables that we want to have inserted at these "%s". 
 
-RECAP:
--
+3. (2:30) 
+Conversion Specifiers
+
+	These "%s" are called Conversion Specifiers. So we can have the variable name be assigned and inserted at the first "%s", then we can have place, time, and food. 
+	% (name, place, time, food)
+
+		>>> 'Hello %s, you are invited to a party at %s at %s. Please bring %s.' % (name, place, time, food)
+		'Hello Alice, you are invited to a party at Main Street at 6 pm. Please bring turnips.'
+
+	And this evaluates to the exact same thing as that huge string concatenation expression evaluated to. Now the the string expression is a lot easier to read. And we can put all the strings that we want to put in it at the end after the % sign. By using String Formatting, you can make your code a lot more readable. 
