@@ -1,4 +1,4 @@
-Lesson : 
+Lesson 24: Regex Groups and the Pipe Character
 
 Key Words:
 1.
