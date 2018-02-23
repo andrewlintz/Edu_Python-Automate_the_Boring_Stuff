@@ -1,19 +1,303 @@
 Lesson 23: Regular Expression Basics 
 
 Key Words:
+1. 
+2. The Non-Regular Expression Example
+3. The re Module
+4. The findall() Method
+
 1.
-2.
-3.
 
+	In this lesson, we will be dealing with pattern matching and regular expressions. You may be familiar with searching for text by pressing "ctrl+F" and typing in the words you are looking for. Regular Expressions takes this one step further. They allow you to specify a pattern of text to search for. Regular Expressions are sort of a simplified mini-language for specifying text patterns. 
 
-1.
+	One example of a Text Pattern is a phone number. If you live in the U.S. or Canada, you know that a phone number will be 3 digits for an area code, followed by a dash, followed by 3 more digits, followed by another dash, followed by 4 more digits. 
 
+		415-555-0000
+
+	This is how you, as a human, know that this is a phone number. While this number: 4,155,550,000 is not a phone number. 
+
+	Most modern text editors and word processors, such as MS Word or Open Office, have find and Find/Replace features that can search based on regular expressions. 
+
+	Under the "special" menu, I can specify a pattern of text, such as any digit or any letter. These are similar to what regular expressions are. Regular expressions are huge time savers 
+
+	
 
 2. (:)
+A Non-Regular Expression Example
+
+	First, I'll show you an Example that does use regular expressions; and you'll see just how much code it take to recognize simple patterns. 
+
+	2_Non_Regular_Expression_Example.py
+
+	And lets write a function called "isPhoneNumber" that takes some "text" string as an argument. And it'll return True if the text is an American or Canadian style phone number, and False if it is not. 
+
+		>>> def isPhoneNumber(text):
+
+	So here's the code, First we'll do a quick check just to see if it's 12 characters long. And if it's not, we can return false b/c we know it's not a phone number-sized. 
+
+		>>> def isPhoneNumber(text):
+			if len(text) !=12:
+				return False # is not phone number sized
+
+	Next let's call .isdecimal() on each character on index 0-3. I'll have a for Loop, going from 0 and up to, but not including, 3; so that we can get the first three. 
+
+		>>> def isPhoneNumber(text):
+			if len(text) !=12:
+				return False # is not phone number sized
+			for i in range(0, 3):
+
+	And if text "i" is not a decimal character, we can return "False", b/c then we know that there is no area code. 
+	
+		>>> def isPhoneNumber(text):
+			if len(text) !=12:
+				return False # is not phone number sized
+			for i in range(0, 3):
+				if not text[i].isdecimal():
+					return False # no area code
+	
+	And also we have to check if character at index 3 is not the dash, and if it's not then we also have to return False there.
+		
+		>>> def isPhoneNumber(text):
+			if len(text) !=12:
+				return False # is not phone number sized
+			for i in range(0, 3):
+				if not text[i].isdecimal():
+					return False # no area code
+			if text[3] != '-':
+				return False # missing dash 
+
+	And then we'll have to check the next three characters after that, to see if those are decimals. B/c that'll be the first the digits of the phone number. So we'll call .isdecimal(), so that if it's not a decimal then we'll also return False.
+
+		>>> def isPhoneNumber(text):
+			if len(text) !=12:
+				return False # is not phone number sized
+			for i in range(0, 3):
+				if not text[i].isdecimal():
+					return False # no area code
+			if text[3] != '-':
+				return False # missing dash
+			for i in range(4, 6):
+				if not text[i].isdecimal():
+					return False # no first 3 digits
+
+	And we'll check for that 2nd dash at index 7, and if it's not equal to a dash we'll return false. b/c it's missing that second dash. 
+
+		>>> def isPhoneNumber(text):
+			if len(text) !=12:
+				return False # is not phone number sized
+			for i in range(0, 3):
+				if not text[i].isdecimal():
+					return False # no area code
+			if text[3] != '-':
+				return False # missing dash
+			for i in range(4, 6):
+				if not text[i].isdecimal():
+					return False # no first 3 digits
+			if text[7] != '-':
+				return False # missing second dash
+
+	Then we'll have to loop over the characters at index 8 up to, but not including, 12; and check if those are decimal characters as well. So we'll call .isdecimal() on each of those characters from 8 through 12, and if it returns false, then we want to return false from our function; b/c it's missing the last 4 digits. 
+
+		>>> def isPhoneNumber(text):
+			if len(text) !=12:
+				return False # is not phone number sized
+			for i in range(0, 3):
+				if not text[i].isdecimal():
+					return False # no area code
+			if text[3] != '-':
+				return False # missing dash
+			for i in range(4, 6):
+				if not text[i].isdecimal():
+					return False # no first 3 digits
+			if text[7] != '-':
+				return False # missing second dash
+			for i in range(8, 12):
+				if not text[i].isdecimal():
+					return False # missing last 4 digits
 
 
-3. (:)
+	So if the executions happens to makes it past all of these different checks, then we'll have our function return True. 
 
+		>>> def isPhoneNumber(text):
+			if len(text) !=12:
+				return False # is not phone number sized
+			for i in range(0, 3):
+				if not text[i].isdecimal():
+					return False # no area code
+			if text[3] != '-':
+				return False # missing dash
+			for i in range(4, 6):
+				if not text[i].isdecimal():
+					return False # no first 3 digits
+			if text[7] != '-':
+				return False # missing second dash
+			for i in range(8, 12):
+				if not text[i].isdecimal():
+					return False # missing last 4 digits
+			return True
+
+	Save this as example .py. So we can run this program. Let's have it print out some test results. So I'm going to call this function isPhoneNumber, and i'll pass it the string '415-555-1234'. That'll print out what the return value of what isPhoneNumber value is. 
+
+		>>> def isPhoneNumber(text):
+			if len(text) !=12:
+				return False # is not phone number sized
+			for i in range(0, 3):
+				if not text[i].isdecimal():
+					return False # no area code
+			if text[3] != '-':
+				return False # missing dash
+			for i in range(4, 6):
+				if not text[i].isdecimal():
+					return False # no first 3 digits
+			if text[7] != '-':
+				return False # missing second dash
+			for i in range(8, 12):
+				if not text[i].isdecimal():
+					return False # missing last 4 digits
+			return True
+		
+		>>> print(isPhoneNumber('415-555-1234'))
+			
+
+	So press F5, and it Returns "True" because this is in fact a phone number according to all of this code. 
+
+	But if we change this to something like "hello", then when we run this program, our isPhoneNumber function returns "False". 
+
+		2.1_Non_Regular_Expersion_example.py
+
+	This is a lot of code and maybe you want to write a function that takes a large string that finds where in that string is a phone number. You'd have to write some more code that can make use of this function would be something like...
+
+	Let's start of with a message, say our string that we want to check is 'Call me 415-555-1011 to tomorrow, or at 415-555-9999 for my office line'. 
+
+		message = 'Call me 415-555-1011 to tomorrow, or at 415-555-9999 for my office line'
+		
+	And so if we want to detect where in this string these phone numbers are, if there are any phone numbers in that string, then we'll have to write code like this: 
+
+	We'll set up a variable called "foundNumber" to be equal to "False". And we'll set this variable to true once we found a number. 
+
+		message = 'Call me 415-555-1011 to tomorrow, or at 415-555-9999 for my office line'
+		foundNumber = False 
+
+	And we'll just loop through every character in this message.
+
+		message = 'Call me 415-555-1011 to tomorrow, or at 415-555-9999 for my office line'
+		foundNumber = False 
+		for i in range(len(message)):
+
+	We'll create a 	subString by creating a variable named "chunk", that is basically, every 12 character long chunk from this big string in "Message". So We will use a slice for this, everything starting at "i", so "i" will just be the starting index and will go up to "i+12". And since it's a slice we do not have to worry if it's going past the end index, like we would if it were just a regular index access. 
+
+		message = 'Call me 415-555-1011 to tomorrow, or at 415-555-9999 for my office line'
+		foundNumber = False 
+		for i in range(len(message)):
+			chunk = message[i:i+12]
+
+	So when "i" is 0, it'll grab the first 12 characters. And when "i" is 1, it'll grab these 12 characters. And when "i" is 2, it'll grab the next 12 characters. And so on and so on, until finally it's look at this string:'415-555-1011'. So we need something that will call "isPhoneNumber" that will check if "chunk" contains a phone number. 
+
+	So "if" "isPhoneNumber(chunk)", so if this returns true, then we want to print out "'Phone number found: ' + chunk". 
+
+		message = 'Call me 415-555-1011 to tomorrow, or at 415-555-9999 for my office line'
+		foundNumber = False 
+		for i in range(len(message)):
+			chunk = message[i:i+12]
+			if isPhoneNumber(chunk):
+				print('Phone number found: ' + chunk)
+
+	And we'll set "foundNumber" is "True". And then here at the very end we'll check if "foundNumber" is false, then we can print out, "'Could not find any phone numbers.'" 
+
+		message = 'Call me 415-555-1011 to tomorrow, or at 415-555-9999 for my office line'
+		foundNumber = False 
+		for i in range(len(message)):
+			chunk = message[i:i+12]
+			if isPhoneNumber(chunk):
+				print('Phone number found: ' + chunk)
+				foundNumber = True
+		if not foundNumber:
+			print('Could not find any phone numbers.')
+
+	And we can press f5. We can see that this program has found these phone numbers in this string. 
+
+		2.2_Non_Regular_Expersion_example.py
+
+	Remember this string can be something huge, like we could just copy and paste all of the text from a web page, and put it in a multi-line string in our program and just have it go through that entire large bit of text. 
+
+	But say there are no phone numbers, like we can get rid of the pattern just by deleting a couple of numbers here. If we run this then it'll just print out the message "Could not find any phone numbers."
+
+		2.3_Non_Regular_Expersion_example.py 
+
+	So again this is a lot of code. It uses all the programming concepts that we are familiar with, if, we've got functions, the len() function, indexes, slices, and everything like that, but this is still a lot of effort that we would have to put in. And text pattern recognitions done so often in programming that programmers have developed Regular Expressions in order to help shorten all of this to just a few lines of code. 
+
+3. (8:48)
+The re Module
+ 
+	So in fact, I'm going to write a version of this using Regular Expressions and you'll see just how much shorter it is. So first, we'll import the "re Module", which has all the Regular Expressions functions in it. And then I'll just get rid of all of this [code]. 
+
+		3_Regular_Expresion_example.py
+
+
+
+		import re
+	
+		message = 'Call me 415-555-1011 to tomorrow, or at 415-555-9999 for my office line'
+
+
+	And now we just need to create a regular expression object that we'll store in this "phoneNumRegex" variable. And this is returned by the "re.compile()" function, which we just pass it our regular expression string. Which is basically the text that defines the pattern you are looking for. So we'll be using "r" raw strings for this: r''. This is just a standard string that begins with the lower case letter "r", and this means that whenever we use the backslash "\" in this string, we are not actually doing an escape character like "\n" new line characters, or "\t".  That's because Regular Expressions uses a lot of backslashes in them. 
+
+		import re
+	
+		message = 'Call me 415-555-1011 to tomorrow, or at 415-555-9999 for my office line'
+
+		phoneNumRegex = re.compile(r'\')
+
+	So the pattern we are looking for will be "\d" because we are looking for a digit, in fact we are looking for 3 digits, so we'll just add 3 of these there: 
+	
+
+		phoneNumRegex = re.compile(r'\d\d\d') 
+
+	We are also looking for a dash and then 3 more numeric digits, and another dash and 4 more numeric digits. 
+
+		phoneNumRegex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+
+	So this says, Okay, we're looking for this pattern of text and we'll store this as a Regular Expression Object that is returned by re.compile, we'll store that Regular Expression Object in this variable, "phoneNumRegex". And the Regular Expression DataType has a .search() Method, which we can then use to search a string, like this string, "message", for this pattern.  And this will return a Matched Object, "mo = "; Which I'll just, I usually store them in a variable called "mo"
+
+		import re
+	
+		message = 'Call me 415-555-1011 to tomorrow, or at 415-555-9999 for my office line'
+
+		phoneNumRegex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+		mo = phoneNumRegex.search(message)
+	
+	And Matched Objects, "mo" have a Method called .group(), which will tell you the actual text. So I'm just going to print this out 
+
+		import re
+	
+		message = 'Call me 415-555-1011 to tomorrow, or at 415-555-9999 for my office line'
+
+		phoneNumRegex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+		mo = phoneNumRegex.search(message)
+		print(mo.group())
+
+	And I'll just press F5 to run this. And you'll see that it prints out, it finds that first occurrence of this Phone Number pattern that we made in the text that we are searching for. 
+
+	And this is just 3 lines of code. Just specifying the pattern, then telling it to search this string, and then printing out the results. That's a lot less code than that huge program that we had before. So it is totally worth it to learn Regular Expressions. 
+
+4 (11:17)
+The findall() Method
+	
+	Now if we want to find every occurrence of that phone number pattern, we can just call the .findall() Method instead. And that just returns a list of strings that matches. So we can just print out that list value right from the start. 
+
+		4_Regular_Expersion_findall_example.py
+
+	This will find every occurrence of that phone number pattern in this string. So that is a huge time savings, we just have to first learn this Regular Expression syntax. I mean right now, we just know how to find digit characters; So any numeric characters we know that \d will find that.
+
+	There isn't that much more to learn to it, but it'll cover the next couple lessons that we'll go over. 
+	
 
 RECAP:
--
+
+- Regular Expressions are mini-language for specifying text patterns. Writing code to do pattern matching without Regular Expressions is a huge pain. 
+- Regex strings often use \ backslashes (like \d), so they are often raw strings: r'\d'
+- Import the re module first. 
+- Call the re.compile() function to create a regex object. 
+- Call the regex object's search() method to create a match object. 
+- Call the Match object's group() method to get the matched string. 
+- \d is the regex for numeric digit characters. 
