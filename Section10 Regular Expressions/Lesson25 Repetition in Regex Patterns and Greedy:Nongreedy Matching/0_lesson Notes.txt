@@ -1,19 +1,329 @@
-Lesson 25: Repetition in Regex Patterns and Greedy/Nongreedy Matching
+Lesson 25: Repetition in Regex Patterns and Greedy/Nongreedy Matching (p154 - 157)
 
 Key Words:
 1.
-2.
-3.
-
+2. ? (zero or one)
+3. * (Zero or more)
+4. + (one or more)
+5. Escaping ?, *, and +
+6. {x} (exactly x)
+7. {x,y} (at least x, at most y)
+8. Greedy Match
+9. Non-Greedy Match
 
 1.
 
+	The Pipe Character that we've went over in the last lesson lets you match one of many possible groups in a Regular Expression. But you may want to also match a certain number of repetitions of the group. You may want to match at least one or more appearances of the group, or you may want to match the group if it appear more than 7 times but less than 10 times. 
 
-2. (:)
+	In this lesson, you'll learn the regular expression syntax for matching a specific number of repetitions. 
+
+	So to start of with, I'm just going to import the "re" regular expressions module. 
+
+		>>> import re
+
+2. (0:42)
+? (zero or one)
+	
+	And lets begin with the first character, the "?" character. This says, match the preceding group zero or one times. It's an optional group. It can either appear once or not appear at all. 
+
+	So let's use some code. I'm going to use a "batman" Regular Expression, that i'll save in this "batRegex" variable. So i'll call re.compile() so that it will return a Regular Expression Object. And the pattern that i want this to match will either be batman or batwoman.
+
+		>>> batRegex = re.compile(r'Batman|Batwoman')
+
+	But in this case, I could make this a bit shorter by just saying, adding (wo) group, and then a ? after it. 
+
+		>>> batRegex = re.compile(r'Bat(wo)?man')
+
+	So this ? says, this group right here can appear in the text zero or one times in order to match this pattern. So if we call this Regular Expression Object's .search() Method, and searched a string like, "The Adventures of Batman". We can see that this Regular Expression does indeed match this string. It found this pattern, Bat(wo)?man, in this string,  "The Adventures of Batman".
+
+		>>> batRegex = re.compile(r'Bat(wo)?man')
+		>>> mo = batRegex.search('The Adventures of Batman')
+		>>> mo.group()
+		'Batman'
+
+	And we can see that it match "Batman", but this will also match "The Adventures of Batwoman"
+
+		>>> batRegex = re.compile(r'Bat(wo)?man')
+		>>> mo = batRegex.search('The Adventures of Batwoman')
+		>>> mo.group()
+		'Batwoman'
+
+	Because the (wo) group, here, can appear one or zero times. It appears zero times here: ('The Adventures of Batman'), and it appears once here: ('The Adventures of Batwoman')
+
+	But if we add something like, "The Adventures of Batwowowowowoman", that actually does not match the pattern at all.
+
+		>>> batRegex = re.compile(r'Bat(wo)?man')
+		>>> mo = batRegex.search('The Adventures of Batwowowowowoman')
+		>>> mo == None
+		True
+
+	Because it can only appear zero or one times. So the .search() Method will return "None" to the "mo" variable.  
+
+	Using the earlier Phone Number example, we can make a regular expression that looks for phone numbers that do or do not have an area code, that is we can make the area code optional. 
+
+	So let's enter this into the interactive shell. I'm going to create a Regular Expression object by calling re.compile and store it in "phoneRegex".
+
+		>>> phoneRegex = re.compile()
+
+	And the pattern for phone numbers we can us that slash d, which stands for "Any Numeric Digit". So we can have 3 digits for the area code, 3 digits for the first part of the phone number, and then the last 4 digits of the phone number.
+
+		>>> phoneReex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+
+	So this is the phone number Regex that requires a phone number to have an area code. So if i had a string, "My phone number is 415-555-1234. Call me tomorrow." We'll just save that into the variable "mo" because it'll return a matched object. 
+
+		>>> phoneReex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+		>>> mo = phoneRegex.search('My phone number is 415-555-1234. Call me tomorrow.')
+		>>> mo.group()
+		'415-555-1234'
+
+	We can see that this actually found the phone number with the area code, except this pattern requires the area code, won't be able to match anything the string doesn't have the area code. 
+
+		>>> phoneReex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+		>>> mo = phoneRegex.search('My phone number is 555-1234. Call me tomorrow.')
+		>>> mo == None
+		True 
+
+	So search returns None, to the mo variable will contain the None Value. 
+
+	So instead, let's create a Regular Expression object, phoneRegex, that puts this area code into a group, and then we have the ? to say, this preceding group is optional.  It can either appear once, or appear zero times. 
+
+		>>> phoneRegex = re.compile(r'(\d\d\d-)?\d\d\d-\d\d\d\d')
+
+	And in this case, we can see that the .search() Method does return a Matched Object. for this phone number, 415-555-1234, and also returns a Matched Object for this phone number, 555-1234, when it doesn't have an area code in front of it. 
+
+		>>> phoneRegex = re.compile(r'(\d\d\d-)?\d\d\d-\d\d\d\d')
+		>>> phoneRegex.search('My phone number is 415-555-1234. Call me tomorrow.')
+		<_sre.SRE_Match object; span=(19, 31), match='415-555-1234'>
+
+		>>> phoneRegex = re.compile(r'(\d\d\d-)?\d\d\d-\d\d\d\d')
+		>>> phoneRegex.search('My phone number is 555-1234. Call me tomorrow.')
+		<_sre.SRE_Match object; span=(19, 31), match='555-1234'>
+
+	And if you ever have to literally match a ?, as part of your pattern, you can escape the ? with a backslash in front of it. 
+
+		\?
+
+	For Example, if you wanted a regex object for the text "dinner?" (with the question mark), you would call: 
+
+			>>> re.compile(r'dinner\?') # note the slash in \?
+
+	In the above case, "dinner" is not optional, we are literally looking for a question mark: "dinner?"
+	
 
 
-3. (:)
+
+3. (4:44)
+* (Zero or more)
+
+	The * character is usually called the star character in the context of Regular Expressions. And it means, match zero or more times. 
+
+	So lets go back to that batman Regular Expression example.  Creating that Regular Expression, and before we added the ? here, which meant that this (wo) could appear one or zero times. 
+
+		>>> batRegex = re.compile(r'Bat(wo)?man')
+
+	If we change that to a star, this means this can appear zero or more times. So basically any number of times. 
+
+		>>> batRegex = re.compile(r'Bat(wo)*man')
+
+	This will actually match "The Adventures of Batman" string, it will also match "The Adventures of Batwoman" string, and since it can accept any number of this (wo) group because the star means zero or more, we can have several of that and it will still match that string.
+
+		>>> batRegex = re.compile(r'Bat(wo)*man')
+		>>> batRegex.search('The Adventures of Batman')
+		<_sre.SRE_Match object; span=(18, 24), match='Batman'>
+		>>> batRegex.search('The Adventures of Batwoman')
+		<_sre.SRE_Match object; span=(18, 26), match='Batwoman'>
+		>>> batRegex.search('The Adventures of Batwowowowoman')
+		<_sre.SRE_Match object; span=(18, 38), match='Batwowowowoman'>
+
+	And if you need to a literal * that appears as part of the pattern, you can escape it with a backslash. 
+
+		\*
+
+
+
+
+4 (5:56)
++ (one or more)
+
+	While the * means "Matches zero or more", the + character means "Match one or more".  So unlike the star that doesn't require it's group in the match string, the group preceding the + must appear at least once. It's not optional. 
+
+	So let's create another Batman Regular Expression object by calling re.compile(), and let's say that that (wo) group is now required to appear one or more times. 
+
+		>>> batRegex = re.compile(r'Bat(wo)+man')
+
+	This means that matching "The Adventures of Batman" string, it won't actually find that. This function call will return "None"
+
+		>>> batRegex = re.compile(r'Bat(wo)+man')
+		>>> batRegex.search('The Adventures of Batman')
+		>>> batRegex.search('The Adventures of Batman') == None
+		True
+
+	However, "The Adventures of Batwoman" will match it, because this (wo) group appears once. And then also this example with "The Adventures of Batwowowowoman", that will also match, because that (wo) group can appear one or more times. 
+
+		>>> batRegex.search('The Adventures of Batwoman')
+		<_sre.SRE_Match object; span=(18, 26), match='Batwoman'>
+		>>> batRegex.search('The Adventures of Batwowowowoman')
+		<_sre.SRE_Match object; span=(18, 38), match='Batwowowowoman'>
+
+	And if you have to match a literal + that appears in your pattern, you can escape it with a backslash. 
+
+		\+
+
+
+
+
+5. (7:11)
+Escaping ?, *, and +
+
+	So let's have a quick example with that Escaping. Let's say that I'm going to create a Regex object by call re.compile() and the pattern that i'm looking for is a literal "+" followed by a literal "*" followed by a literal "?". 
+
+		>>> regex = re.compile(r'\+\*\?')
+
+	That would match a string that looks something like "I learned about +*? regex syntax". 
+
+		>>> regex = re.compile(r'\+\*\?')
+		>>> regex.search('I learned about +*? regex syntax')
+		<_sre.SRE_Match object; span=(16, 19),  match='+*?'>
+
+	And this will actually match these characters "+ * ?". So if you literally want to match these characters that otherwise have a special meaning for regular expressions strings, you can just precede them with a backslash to Escape them. 
+
+	In fact, we can even have something like putting this inside a group, and saying this has to appear one or more times, by have a + that means, oh, one or more times. And that would match a string that looks like this: "I learned about +*?+*?+*?+*?+*? regex syntax"
+
+		>>> regex = re.compile(r'(\+\*\?)+')
+		>>> regex.search('I learned about +*?+*?+*?+*?+*? regex syntax')
+		<_sre.SRE_Match object; span=(16, 31),  match='+*?+*?+*?+*?+*?'>
+
+	So here it means, literally i want you to find a + that appears in the string that I am looking for, that's part of the text pattern and the second + is more of a Regular Expression instruction that's saying, "Match one or more of this preceding groups in the parenthesis" 
+		
+recap 
+
+ ?: zero or one
+ *: zero or more
+ +: one or more 
+
+
+
+	
+6. (8:58)
+{x} (exactly x)
+
+	Let's say you wanted to match a specific number of repetitions of a group. We can do that in python. I'm going to create a Regular Expression object that matches the string "Ha" exactly 3 times, and we can to that with "{}" with the number "3" in-between them. 
+
+		>>> haRegex = re.compile(r'(Ha) {3}')
+
+	So if we call the .search() Method here, we can search for 'He said "HaHaHa"'. 
+
+		>>> haRegex = re.compile(r'(Ha) {3}')
+		>>> haRegex.search('He said "HaHaHa"')
+		<_sre.SRE_Match object; span=(9, 15), match='HaHaHa'>
+
+	We can see that this string, 'HaHaHa', is matched in the regular expression.
+
+	This is kind of a simple example that you might think, couldn't we just have something like: 
+
+		>>> haRegex = re.compile(r'HaHAhA')
+
+	And this would work too this would do the exact same thing as this, (r'(Ha) {3}'), but the nice part about this syntax is that you can have something like, say, if we wanted to match multiple phone numbers that either have or did not have the area code in front. So that expression would look like this:
+
+		>>> phoneRegex = re.compile(r'(\d\d\d-)?\d\d\d-\d\d\d\d')
+
+	Where we have the optional area code, these are 3 digits and a dash which can appear zero or one times, (\d\d\d-)?, and then we have the rest of the 7 digits of the phone number. 
+
+	And now we can put all of that inside a group and just say, we want to match 3 phone numbers in a row.   
+
+		>>> phoneRegex = re.compile(r'((\d\d\d-)?\d\d\d-\d\d\d\d){3}')
+
+	That might look a little bit strange, so let's say they also have a "," that they are separated by except that "," is also optional. We can put that inside a group and say that "," is optional. 
+
+		>>> phoneRegex = re.compile(r'((\d\d\d-)?\d\d\d-\d\d\d\d(,)?){3}')
+
+	So then, this phone number Regex would match a string like, "My numbers are 415-555-1234,555-4242,212-555-0000" 
+
+		>>> phoneRegex = re.compile(r'((\d\d\d-)?\d\d\d-\d\d\d\d(,)?){3}')
+		>>> phoneRegex.search('My numbers are 415-555-1234,555-4242,212-555-0000')
+		<_sre.SRE_Match object; span=(15, 49), match='415-555-1234,555-4242,212-555-0000'>
+
+	A really complicated pattern like this can be matched by this regular expression where we are looking for 3 phone numbers in a row, which may or may not have the area code, and may or may not have a "," following it that separates them. 
+
+	And remember, this pattern would match exactly 3 of this complicated pattern: '((\d\d\d-)?\d\d\d-\d\d\d\d(,)?){3}'. Just like we could have passed a string that has 3 "Ha"s literally typed out, instead of using this {3} syntax, we could have gotten rid of this, {3}, and instead, copied and paste this entire regular expression 3 times. 
+		>>> >>> phoneRegex = re.compile(r'((\d\d\d-)?\d\d\d-\d\d\d\d(,)?)((\d\d\d-)?\d\d\d-\d\d\d\d(,)?)((\d\d\d-)?\d\d\d-\d\d\d\d(,)?)')
+
+	But then at this point its getting kind of hard to read what exactly what we mean from this Regular Expression. It's just, we'd have to spend a lot of time kind of piecing together what this means. So {} syntax really helps out on that front. 
+
+
+
+7. (12:21)
+{x,y} (at least x, at most y)	
+
+	Now let's say that you wanted to match, instead of 3, you wanted match a range of possible repetitions. So anywhere between 3 & 5, you can just add a "," and a second number in the {}, so this becomes a minimum and maximum number of repetitions.
+
+	So we can have a string like, he said "HaHaHa", and that would match, we can also have 4 or 5 of these "Ha"s as well, and that would match. 
+
+		>>> haRegex = re.compile(r'(Ha){3,5}')
+		>>> haRegex.search('He said "HaHaHa"')
+		<_sre.SRE_Match object; span=(9, 15), match='HaHaHa'>
+		>>> haRegex.search('He said "HaHaHaHaHa"')
+		<_sre.SRE_Match object; span=(9, 19), match='HaHaHaHaHa'>
+
+	If we had anymore, well this would still match, but this would only match the first 5 "ha"s
+
+		>>> haRegex.search('He said "HaHaHaHaHaHaHaHaHaHaHaHaHa"')
+		<_sre.SRE_Match object; span=(9, 19), match='HaHaHaHaHa'>
+
+	And just like Slices, if you leave off the first number or second number, in this case, 
+		>>> haRegex = re.compile(r'(Ha) {,5}') 
+
+	this is the same thing as saying "zero to five". Or, if you had a 3 and then a comma followed by no number, 
+
+		>>> haRegex = re.compile(r'(Ha) {3,}') 
+
+	this is the same as saying 3 or more, so there's an unbounded maximum, you can have any number of these, so long as you have at least 3. 
+
+		
+	
+	So let's do a little experiment here. I'm going to create a Regular Expression that matches anywhere between 3 - 5 digits, so that \d  was the Regular Expression syntax meaning "Any Numeric Digits". Say I want to match a string that had between 3 - 5 of them.
+
+		>>> digitRegex = re.compile(r'(\d){3,5}')
+
+	So i will call it and have it search the string "123456890". 
+
+		>>> digitRegex = re.compile(r'(\d){3,5}')
+		>>> digitRegex.search('1234567890')
+		<_sre.SRE_Match object; span=(0, 5), match='12345'>
+
+8 
+Greedy 
+
+	You can see that what it matched right here, match='12345', was the first 5 digits. I mean, it would technically match these 5 digits, '23456', but Python's Regular Expressions start as soon as possible, as the earliest match they can find, is the match they'll return. 
+
+	And Also notice, it could have matched these first 3 characters, or the first 4 characters, but instead it matched the first 5 characters and that's because by default Regular Expressions in Python do "Greedy" matches. 
+
+	This means that it tries to match the longest possible string that matches this pattern: (r'(\d){3,5}'). So in an ambiguous situation, like this string "123456890", where it could match any 3, 4, or 5 digits, Regular Expressions are going to Match the Maximum long as possible string.
+
+9 (14:49)
+Non-Greedy
+
+	Now if you want it to do a Non-Greedy Match, you can specify a "?" after that {}. 
+		>>> digitRegex = re.compile(r'(\d) {3,5}?')
+
+	So this "?" is different from the ? that means "zero or one". When it comes after a pattern like this, "{3, 5}", as opposed to directly after a group(), this means, basically do a Non-Greedy Match. 
+
+	So let's create this Regular Expression and then search that same "1234567890" string.
+
+		>>> digitRegex = re.compile(r'(\d){3,5}?')
+		>>> digitRegex.search('1234567890')
+		<_sre.SRE_Match object; span=(0, 3), match='123'>
+
+	You can see, this time, it matched the smallest possible string, "123". And this is a pattern happens a lot in Regular Expressions syntax, If you add a "?", it'll do a Non-Greedy Match; where as, without it, it'll just do a normal Greedy Match, where it tries to match the longest as possible string. 
 
 
 RECAP:
--
+	
+- The ? says the group matches zero or one times.
+- The * says the group matches zero or more times.
+- The + says the group matches one or more times. 
+- The curly braces can match a specific number of times. 
+- The curly braces with two numbers matches a minimum and maximum number of times. 
+- Leaving out the first or second number in the curly braces says there is no minimum or maximum.
+- Greedy matching match the longest string possible, nongryeedy matching match the shortest string possible. 
+- Putting a question mark after the curly braces makes it do a nongryeedy match.
