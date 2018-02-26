@@ -1,19 +1,152 @@
-Lesson 24: Regex Groups and the Pipe Character
+Lesson 24: Regex Groups and the Pipe Character 
+(p151 - p154)
 
 Key Words:
 1.
-2.
-3.
+2. Groups
+3. | Pipe Character
 
 
 1.
 
+	Now that you know the basic steps for creating and finding Regular Expressions Objects with python, You're ready to try some more of the powerful pattern matching capabilities. 
 
-2. (:)
+	Say you wanted to separate the area code from the rest of the phone number. The string that we used for the Regular Expression pattern for Phone Numbers was:
+			
+		r'\d\d\d-\d\d\d-\d\d\d\d'
+
+	So let's use this Regular Expression to find Phone Numbers. First we are going to have to import the "re Module", we'll have to create a Regex Object which we'll store in this "phoneNumRegex" variable. So we create Regex Objects by calling compile. Then passing it that string of Regular Expression pattern "(r'\d\d\d-\d\d\d-\d\d\d\d')" that we are looking for.
+
+		>>> import re
+		>>> phoneNumRegex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+
+	And we us the method of that Regular Expression Object called .search() to search a string for this pattern. So let's say the string was, "My number is 415-555-4242"
+
+		>>> import re
+		>>> phoneNumRegex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+		>>> phoneNumRegex.search('My number is 415-555-4242')
+
+	And this will return a Match Object. 
+
+		>>> import re
+		>>> phoneNumRegex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+		>>> phoneNumRegex.search('My number is 415-555-4242')
+		<_sre.SRE_Match object; span=(13, 25), match='415-555-4242'>
+
+	So we want to be sure to store that in a variable. 
+
+		>>> import re
+		>>> phoneNumRegex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+		>>> mo = phoneNumRegex.search('My number is 415-555-4242')
+
+	And the Match Object has a .group() Method, which will return the entire pattern. '415-555-4242'
+
+		>>> import re
+		>>> phoneNumRegex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+		>>> mo = phoneNumRegex.search('My number is 415-555-4242')
+		>>> mo.group()
+		'415-555-4242'
 
 
-3. (:)
+2. (1:32)
+Groups
+
+	But say we want to get the area code, of just the phone number part of this. We can do this using parenthesis to mark out Groups.  
+
+	So we can use a parenthesis here, to mark these fist three digits as the Area code group. 
+
+		>>> phoneNumRegex = re.compile(r'(\d\d\d)-\d\d\d-\d\d\d\d')
+
+	And then use parenthesis here, to mark out the rest of the phone number as a separate group, also.  
+
+		>>> phoneNumRegex = re.compile(r'(\d\d\d)-(\d\d\d-\d\d\d\d)')
+
+	So this creates a Regular Expression object, similarly we can use the search method to return a Match Object, and when we call mo.group(), it does the same thing as before. 
+		>>> phoneNumRegex = re.compile(r'(\d\d\d)-(\d\d\d-\d\d\d\d)')
+		>>> mo = phoneNumRegex.search('My number is 415-555-4242')
+		>>> mo.group()
+		'415-555-4242'
+
+	But now we have the separate individual groups, the fist one will be Group 1, for the area code. So we can just pass an integer, 1, to that .group() method and that will return that first part, just these first three digits, which are right here, (\d\d\d). 
+
+		>>> phoneNumRegex = re.compile(r'(\d\d\d)-(\d\d\d-\d\d\d\d)')
+		>>> mo = phoneNumRegex.search('My number is 415-555-4242')
+		>>> mo.group(1)
+		'415'
+
+	Note that it does not have to actually match a literal parenthesis inside the text we are looking at right here, 'My number is 415-555-4242'.
+
+	And the second .group() is the second set of parenthesis right here, around the main phone number part, without the area code. So we can just pass "2" to the .group() Method, to get that part. 
+
+		>>> mo.group(2)
+		'555-4242'
+
+	So this is really handy syntax to put things inside groups when you just need to grab just a specific part of something. So parenthesis have a special meaning in Regular Expressions, they mark out where the group begins and ends if you want to actually find literal parenthesis in your text, say if we had this string "My Number is (415) 555-4242", we would want to find literally Parenthesis around as part of our text apart of our pattern. In this case, you need to escape the opening and closing parenthesis with a back slash. So our Regular Expression String would look something like, (r'\(\d\d\d\)-\d\d\d-\d\d\d\d'), back slash open parenthesis, since we are literally looking for a parenthesis, this is not the start of a group. \d\d\d, for 3 digits. And then a slash closing parenthesis, and then space, \d\d\d for the first 3 digits, and then the last 4 digits,\d\d\d\d. 
+
+	So now when we call the .search() Method, it can look up and find actual literal parenthesis that are in the text string that we are searching. 
+
+		>>> phoneNumRegex = re.compile(r'\(\d\d\d\) \d\d\d-\d\d\d\d')
+		>>> mo = phoneNumRegex.search('My number is (415) 555-4242')
+		>>> mo.group()
+		'(415) 555-4242'
+	
+3. (4:08)
+| Pipe Character
+
+	The vertical Bar key above the "enter" key on your keyboard is called the Pipe Character. You can also use the Pipe character to match one of several patterns as part of your Regular Expression. 
+
+	For Example, say you wanted to match any one of the strings "Batman, Batmobile, BatCopter, or Batbat." Since all these strings start with the word bat, it would be nice if you could just specify that prefix once. Now this can be done with Pipes. 
+	Lets create a new "batRegex" object calling "re.compile()", this will be a raw string that we pass it "r''"
+
+		>>> batRegex = re.compile(r'
+
+	So the pattern we are looking for is "Bat" followed by a bunch of possible suffixes. So we'll just put that in their own group right there. 
+
+		>>> batRegex = re.compile(r'Bat()')
+
+	So we will just type out all the possible suffixes that we are looking for, and we'll separate them with the pipe character. So it could be BatMan, or Mobile, or copter, or bat.
+
+		>>> batRegex = re.compile(r'Bat(man|mobile|copter|bat)')
+
+	Now we can search a bit of text using this Regular Expression object and call it's .search() Method. Say we'll search the string "Batmobile lost a wheel". 
+
+		>>> batRegex = re.compile(r'Bat(man|mobile|copter|bat)')
+		>>> mo = batRegex.search('Batmobile lost a wheel')
+		>>> mo.group()
+		'Batmobile'
+
+	And you can see it successfully found the word "Batmobile" because that is one of the patterns it is looking for. 
+
+	If we were searching for something like, "Batmotorcycle", that would not be found anywhere in the .search() method, would return the value "none". 
+
+		>>> batRegex = re.compile(r'Bat(man|mobile|copter|bat)')
+		>>> mo = batRegex.search('Batmotorcycle lost a wheel')
+		>>> mo == None
+		True
+
+	This is an important thing to keep in mind, if the .search() Method can't find that Regular Expression pattern in that string you pass it, it's going to return "None". So if you blind save that to the "mo" variable, and try to call .group() on that "None" value, you're going to get an error message, b/c the "None" value doesn't have a method called "group" 
+		
+		>>> batRegex = re.compile(r'Bat(man|mobile|copter|bat)')
+		>>> mo = batRegex.search('Batmotorcycle lost a wheel')
+		>>> mo.group()
+		Traceback (most recent call last):
+		  File "<pyshell#24>", line 1 in <module>
+		    mo.group()
+		AttributeError: 'NoneType' object has no attribute 'group'
+
+	Now remember, since we put this, all these possible suffixes into a group, and if we just want to find out which suffix that was found in this pattern, then we can just pass "1" to the .group() Method. 
+
+		
+		>>> batRegex = re.compile(r'Bat(man|mobile|copter|bat)')
+		>>> mo = batRegex.search('Batmotorcycle lost a wheel')
+		>>> mo.group(1)
+		'mobile'
 
 
 RECAP:
--
+
+- Groups are created in regex strings with parentheses.
+- The first set of parentheses is group 1, the second is 2, and so on. 
+- Calling .group() or .group(0) returns the fun matching string, .group(1) returns group 1's matching string, and so on. 
+- Use "\(" and "\)" to match literal parentheses in the regex string.
+- The | pipe can match one of many possible groups. 
