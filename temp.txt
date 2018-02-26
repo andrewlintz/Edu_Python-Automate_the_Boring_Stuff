@@ -4,6 +4,9 @@ Key Words:
 1.
 2. ? (zero or one)
 3. * (Zero or more)
+4. + (one or more)
+5. Escaping ?, *, and +
+6. {x} (exactly x)
 
 
 1.
@@ -117,8 +120,106 @@ Key Words:
 
 		>>> batRegex = re.compile(r'Bat(wo)*man')
 
-	This will actually match "The Adventures of Batman" string,  (5:21)
-	
+	This will actually match "The Adventures of Batman" string, it will also match "The Adventures of Batwoman" string, and since it can accept any number of this (wo) group because the star means zero or more, we can have several of that and it will still match that string.
 
+		>>> batRegex = re.compile(r'Bat(wo)*man')
+		>>> batRegex.search('The Adventures of Batman')
+		<_sre.SRE_Match object; span=(18, 24), match='Batman'>
+		>>> batRegex.search('The Adventures of Batwoman')
+		<_sre.SRE_Match object; span=(18, 26), match='Batwoman'>
+		>>> batRegex.search('The Adventures of Batwowowowoman')
+		<_sre.SRE_Match object; span=(18, 38), match='Batwowowowoman'>
+
+	And if you need to a literal * that appears as part of the pattern, you can escape it with a backslash. 
+
+		\*
+
+4 (5:56)
++ (one or more)
+
+	While the * means "Matches zero or more", the + character means "Match one or more".  So unlike the star that doesn't require it's group in the match string, the group preceding the + must appear at least once. It's not optional. 
+
+	So let's create another Batman Regular Expression object by calling re.compile(), and let's say that that (wo) group is now required to appear one or more times. 
+
+		>>> batRegex = re.compile(r'Bat(wo)+man')
+
+	This means that matching "The Adventures of Batman" string, it won't actually find that. This function call will return "None"
+
+		>>> batRegex = re.compile(r'Bat(wo)+man')
+		>>> batRegex.search('The Adventures of Batman')
+		>>> batRegex.search('The Adventures of Batman') == None
+		True
+
+	However, "The Adventures of Batwoman" will match it, because this (wo) group appears once. And then also this example with "The Adventures of Batwowowowoman", that will also match, because that (wo) group can appear one or more times. 
+
+		>>> batRegex.search('The Adventures of Batwoman')
+		<_sre.SRE_Match object; span=(18, 26), match='Batwoman'>
+		>>> batRegex.search('The Adventures of Batwowowowoman')
+		<_sre.SRE_Match object; span=(18, 38), match='Batwowowowoman'>
+
+	And if you have to match a literal + that appears in your pattern, you can escape it with a backslash. 
+
+		\+
+
+5. (7:11)
+Escaping ?, *, and +
+
+	So let's have a quick example with that Escaping. Let's say that I'm going to create a Regex object by call re.compile() and the pattern that i'm looking for is a literal "+" followed by a literal "*" followed by a literal "?". 
+
+		>>> regex = re.compile(r'\+\*\?')
+
+	That would match a string that looks something like "I learned about +*? regex syntax". 
+
+		>>> regex = re.compile(r'\+\*\?')
+		>>> regex.search('I learned about +*? regex syntax')
+		<_sre.SRE_Match object; span=(16, 19),  match='+*?'>
+
+	And this will actually match these characters "+ * ?". So if you literally want to match these characters that otherwise have a special meaning for regular expressions strings, you can just precede them with a backslash to Escape them. 
+
+	In fact, we can even have something like putting this inside a group, and saying this has to appear one or more times, by have a + that means, oh, one or more times. And that would match a string that looks like this: "I learned about +*?+*?+*?+*?+*? regex syntax"
+
+		>>> regex = re.compile(r'(\+\*\?)+')
+		>>> regex.search('I learned about +*?+*?+*?+*?+*? regex syntax')
+		<_sre.SRE_Match object; span=(16, 31),  match='+*?+*?+*?+*?+*?'>
+
+	So here it means, literally i want you to find a + that appears in the string that I am looking for, that's part of the text pattern and the second + is more of a Regular Expression instruction that's saying, "Match one or more of this preceding groups in the parenthesis" 
+		
+recap 
+
+ ?: zero or one
+ *: zero or more
+ +: one or more 
+	
+6. (8:58)
+{x} (exactly x)
+
+	Let's say you wanted to match a specific number of repetitions of a group. We can do that in python. I'm going to create a Regular Expression object that matches the string "Ha" exactly 3 times, and we can to that with "{}" with the number "3" in-between them. 
+
+		>>> haRegex = re.compile(r'(Ha) {3}')
+
+	So if we call the .search() Method here, we can search for 'He said "HaHaHa"'. 
+
+		>>> haRegex = re.compile(r'(Ha) {3}')
+		>>> haRegex.search('He said "HaHaHa"')
+		<_sre.SRE_Match object; span=(9, 15), match='HaHaHa'>
+
+	We can see that this string, 'HaHaHa', is matched in the regular expression.
+
+	This is kind of a simple example that you might think, couldn't we just have something like: 
+
+		>>> haRegex = re.compile(r'HaHAhA')
+
+	And this would work too this would do the exact same thing as this, (r'(Ha) {3}'), but the nice part about this syntax is that you can have something like, say, if we wanted to match multiple phone numbers that either have or did not have the area code in front. So that expression would look like this:
+
+		>>> phoneRegex = re.compile(r'(\d\d\d-)?\d\d\d-\d\d\d\d')
+
+	Where we have the optional area code, these are 3 digits and a dash which can appear zero or one times, (\d\d\d-)?, and then we have the rest of the 7 digits of the phone number. 
+
+	And now we can put all of that inside a group and just say, we want to match 3 phone numbers in a row.   
+
+		>>> phoneRegex = re.compile(r'((\d\d\d-)?\d\d\d-\d\d\d\d){3}')
+
+	That might look a little bit strange, so let's say they also have a "," that they are separated by except that "," is also optional. (10:49)
+	
 RECAP:
 -
