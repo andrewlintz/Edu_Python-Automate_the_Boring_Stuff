@@ -1,19 +1,124 @@
-	In lesson 7 you learned using for loops to execute a block of code in a certain number of times. 
+Lesson 25: Repetition in Regex Patterns and Greedy/Nongreedy Matching (p154 - 157)
 
-		>>> for i in range(4):
-			print(i)
-		0
-		1
-		2
-		3
-	This outputs 0,1,2,3. but technically a for loop repeats the code block once for each value in a list, or a list like value.
+Key Words:
+1.
+2. ? (zero or one)
+3. * (Zero or more)
 
-2. (0:44)
-Range Objects and List-Like Values
 
-	Let's take a closer look at this Range Function
+1.
 
-		>>>range(4)
-		range(0, 4)
+	The Pipe Character that we've went over in the last lesson lets you match one of many possible groups in a Regular Expression. But you may want to also match a certain number of repetitions of the group. You may want to match at least one or more appearances of the group, or you may want to match the group if it appear more than 7 times but less than 10 times. 
 
-	As you can see, range(4), turns a value into a data type called a "Range Object". And Range Object are a List like values. Python considers, this range object to be similar to the list [0,1,2,3]. In fact you could 
+	In this lesson, you'll learn the regular expression syntax for matching a specific number of repetitions. 
+
+	So to start of with, I'm just going to import the "re" regular expressions module. 
+
+		>>> import re
+
+2. (0:42)
+? (zero or one)
+	
+	And lets begin with the first character, the "?" character. This says, match the preceding group zero or one times. It's an optional group. It can either appear once or not appear at all. 
+
+	So let's use some code. I'm going to use a "batman" Regular Expression, that i'll save in this "batRegex" variable. So i'll call re.compile() so that it will return a Regular Expression Object. And the pattern that i want this to match will either be batman or batwoman.
+
+		>>> batRegex = re.compile(r'Batman|Batwoman')
+
+	But in this case, I could make this a bit shorter by just saying, adding (wo) group, and then a ? after it. 
+
+		>>> batRegex = re.compile(r'Bat(wo)?man')
+
+	So this ? says, this group right here can appear in the text zero or one times in order to match this pattern. So if we call this Regular Expression Object's .search() Method, and searched a string like, "The Adventures of Batman". We can see that this Regular Expression does indeed match this string. It found this pattern, Bat(wo)?man, in this string,  "The Adventures of Batman".
+
+		>>> batRegex = re.compile(r'Bat(wo)?man')
+		>>> mo = batRegex.search('The Adventures of Batman')
+		>>> mo.group()
+		'Batman'
+
+	And we can see that it match "Batman", but this will also match "The Adventures of Batwoman"
+
+		>>> batRegex = re.compile(r'Bat(wo)?man')
+		>>> mo = batRegex.search('The Adventures of Batwoman')
+		>>> mo.group()
+		'Batwoman'
+
+	Because the (wo) group, here, can appear one or zero times. It appears zero times here: ('The Adventures of Batman'), and it appears once here: ('The Adventures of Batwoman')
+
+	But if we add something like, "The Adventures of Batwowowowowoman", that actually does not match the pattern at all.
+
+		>>> batRegex = re.compile(r'Bat(wo)?man')
+		>>> mo = batRegex.search('The Adventures of Batwowowowowoman')
+		>>> mo == None
+		True
+
+	Because it can only appear zero or one times. So the .search() Method will return "None" to the "mo" variable.  
+
+	Using the earlier Phone Number example, we can make a regular expression that looks for phone numbers that do or do not have an area code, that is we can make the area code optional. 
+
+	So let's enter this into the interactive shell. I'm going to create a Regular Expression object by calling re.compile and store it in "phoneRegex".
+
+		>>> phoneRegex = re.compile()
+
+	And the pattern for phone numbers we can us that slash d, which stands for "Any Numeric Digit". So we can have 3 digits for the area code, 3 digits for the first part of the phone number, and then the last 4 digits of the phone number.
+
+		>>> phoneReex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+
+	So this is the phone number Regex that requires a phone number to have an area code. So if i had a string, "My phone number is 415-555-1234. Call me tomorrow." We'll just save that into the variable "mo" because it'll return a matched object. 
+
+		>>> phoneReex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+		>>> mo = phoneRegex.search('My phone number is 415-555-1234. Call me tomorrow.')
+		>>> mo.group()
+		'415-555-1234'
+
+	We can see that this actually found the phone number with the area code, except this pattern requires the area code, won't be able to match anything the string doesn't have the area code. 
+
+		>>> phoneReex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+		>>> mo = phoneRegex.search('My phone number is 555-1234. Call me tomorrow.')
+		>>> mo == None
+		True 
+
+	So search returns None, to the mo variable will contain the None Value. 
+
+	So instead, let's create a Regular Expression object, phoneRegex, that puts this area code into a group, and then we have the ? to say, this preceding group is optional.  It can either appear once, or appear zero times. 
+
+		>>> phoneRegex = re.compile(r'(\d\d\d-)?\d\d\d-\d\d\d\d')
+
+	And in this case, we can see that the .search() Method does return a Matched Object. for this phone number, 415-555-1234, and also returns a Matched Object for this phone number, 555-1234, when it doesn't have an area code in front of it. 
+
+		>>> phoneRegex = re.compile(r'(\d\d\d-)?\d\d\d-\d\d\d\d')
+		>>> phoneRegex.search('My phone number is 415-555-1234. Call me tomorrow.')
+		<_sre.SRE_Match object; span=(19, 31), match='415-555-1234'>
+
+		>>> phoneRegex = re.compile(r'(\d\d\d-)?\d\d\d-\d\d\d\d')
+		>>> phoneRegex.search('My phone number is 555-1234. Call me tomorrow.')
+		<_sre.SRE_Match object; span=(19, 31), match='555-1234'>
+
+	And if you ever have to literally match a ?, as part of your pattern, you can escape the ? with a backslash in front of it. 
+
+		\?
+
+	For Example, if you wanted a regex object for the text "dinner?" (with the question mark), you would call: 
+
+			>>> re.compile(r'dinner\?') # note the slash in \?
+
+	In the above case, "dinner" is not optional, we are literally looking for a question mark: "dinner?"
+	
+3. (4:44)
+* (Zero or more)
+
+	The * character is usually called the star character in the context of Regular Expressions. And it means, match zero or more times. 
+
+	So lets go back to that batman Regular Expression example.  Creating that Regular Expression, and before we added the ? here, which meant that this (wo) could appear one or zero times. 
+
+		>>> batRegex = re.compile(r'Bat(wo)?man')
+
+	If we change that to a star, this means this can appear zero or more times. So basically any number of times. 
+
+		>>> batRegex = re.compile(r'Bat(wo)*man')
+
+	This will actually match "The Adventures of Batman" string,  (5:21)
+	
+
+RECAP:
+-
