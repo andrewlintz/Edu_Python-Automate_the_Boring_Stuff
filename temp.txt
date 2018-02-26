@@ -7,7 +7,9 @@ Key Words:
 4. + (one or more)
 5. Escaping ?, *, and +
 6. {x} (exactly x)
-
+7. {x,y} (at least x, at most y)
+8. Greedy Match
+9. Non-Greedy Match
 
 1.
 
@@ -107,6 +109,9 @@ Key Words:
 
 	In the above case, "dinner" is not optional, we are literally looking for a question mark: "dinner?"
 	
+
+
+
 3. (4:44)
 * (Zero or more)
 
@@ -134,6 +139,9 @@ Key Words:
 
 		\*
 
+
+
+
 4 (5:56)
 + (one or more)
 
@@ -160,6 +168,9 @@ Key Words:
 	And if you have to match a literal + that appears in your pattern, you can escape it with a backslash. 
 
 		\+
+
+
+
 
 5. (7:11)
 Escaping ?, *, and +
@@ -189,6 +200,9 @@ recap
  ?: zero or one
  *: zero or more
  +: one or more 
+
+
+
 	
 6. (8:58)
 {x} (exactly x)
@@ -219,7 +233,97 @@ recap
 
 		>>> phoneRegex = re.compile(r'((\d\d\d-)?\d\d\d-\d\d\d\d){3}')
 
-	That might look a little bit strange, so let's say they also have a "," that they are separated by except that "," is also optional. (10:49)
+	That might look a little bit strange, so let's say they also have a "," that they are separated by except that "," is also optional. We can put that inside a group and say that "," is optional. 
+
+		>>> phoneRegex = re.compile(r'((\d\d\d-)?\d\d\d-\d\d\d\d(,)?){3}')
+
+	So then, this phone number Regex would match a string like, "My numbers are 415-555-1234,555-4242,212-555-0000" 
+
+		>>> phoneRegex = re.compile(r'((\d\d\d-)?\d\d\d-\d\d\d\d(,)?){3}')
+		>>> phoneRegex.search('My numbers are 415-555-1234,555-4242,212-555-0000')
+		<_sre.SRE_Match object; span=(15, 49), match='415-555-1234,555-4242,212-555-0000'>
+
+	A really complicated pattern like this can be matched by this regular expression where we are looking for 3 phone numbers in a row, which may or may not have the area code, and may or may not have a "," following it that separates them. 
+
+	And remember, this pattern would match exactly 3 of this complicated pattern: '((\d\d\d-)?\d\d\d-\d\d\d\d(,)?){3}'. Just like we could have passed a string that has 3 "Ha"s literally typed out, instead of using this {3} syntax, we could have gotten rid of this, {3}, and instead, copied and paste this entire regular expression 3 times. 
+		>>> >>> phoneRegex = re.compile(r'((\d\d\d-)?\d\d\d-\d\d\d\d(,)?)((\d\d\d-)?\d\d\d-\d\d\d\d(,)?)((\d\d\d-)?\d\d\d-\d\d\d\d(,)?)')
+
+	But then at this point its getting kind of hard to read what exactly what we mean from this Regular Expression. It's just, we'd have to spend a lot of time kind of piecing together what this means. So {} syntax really helps out on that front. 
+
+
+
+7. (12:21)
+{x,y} (at least x, at most y)	
+
+	Now let's say that you wanted to match, instead of 3, you wanted match a range of possible repetitions. So anywhere between 3 & 5, you can just add a "," and a second number in the {}, so this becomes a minimum and maximum number of repetitions.
+
+	So we can have a string like, he said "HaHaHa", and that would match, we can also have 4 or 5 of these "Ha"s as well, and that would match. 
+
+		>>> haRegex = re.compile(r'(Ha){3,5}')
+		>>> haRegex.search('He said "HaHaHa"')
+		<_sre.SRE_Match object; span=(9, 15), match='HaHaHa'>
+		>>> haRegex.search('He said "HaHaHaHaHa"')
+		<_sre.SRE_Match object; span=(9, 19), match='HaHaHaHaHa'>
+
+	If we had anymore, well this would still match, but this would only match the first 5 "ha"s
+
+		>>> haRegex.search('He said "HaHaHaHaHaHaHaHaHaHaHaHaHa"')
+		<_sre.SRE_Match object; span=(9, 19), match='HaHaHaHaHa'>
+
+	And just like Slices, if you leave off the first number or second number, in this case, 
+		>>> haRegex = re.compile(r'(Ha) {,5}') 
+
+	this is the same thing as saying "zero to five". Or, if you had a 3 and then a comma followed by no number, 
+
+		>>> haRegex = re.compile(r'(Ha) {3,}') 
+
+	this is the same as saying 3 or more, so there's an unbounded maximum, you can have any number of these, so long as you have at least 3. 
+
+		
 	
+	So let's do a little experiment here. I'm going to create a Regular Expression that matches anywhere between 3 - 5 digits, so that \d  was the Regular Expression syntax meaning "Any Numeric Digits". Say I want to match a string that had between 3 - 5 of them.
+
+		>>> digitRegex = re.compile(r'(\d){3,5}')
+
+	So i will call it and have it search the string "123456890". 
+
+		>>> digitRegex = re.compile(r'(\d){3,5}')
+		>>> digitRegex.search('1234567890')
+		<_sre.SRE_Match object; span=(0, 5), match='12345'>
+
+8 
+Greedy 
+
+	You can see that what it matched right here, match='12345', was the first 5 digits. I mean, it would technically match these 5 digits, '23456', but Python's Regular Expressions start as soon as possible, as the earliest match they can find, is the match they'll return. 
+
+	And Also notice, it could have matched these first 3 characters, or the first 4 characters, but instead it matched the first 5 characters and that's because by default Regular Expressions in Python do "Greedy" matches. 
+
+	This means that it tries to match the longest possible string that matches this pattern: (r'(\d){3,5}'). So in an ambiguous situation, like this string "123456890", where it could match any 3, 4, or 5 digits, Regular Expressions are going to Match the Maximum long as possible string.
+
+9 (14:49)
+Non-Greedy
+
+	Now if you want it to do a Non-Greedy Match, you can specify a "?" after that {}. 
+		>>> digitRegex = re.compile(r'(\d) {3,5}?')
+
+	So this "?" is different from the ? that means "zero or one". When it comes after a pattern like this, "{3, 5}", as opposed to directly after a group(), this means, basically do a Non-Greedy Match. 
+
+	So let's create this Regular Expression and then search that same "1234567890" string.
+
+		>>> digitRegex = re.compile(r'(\d){3,5}?')
+		>>> digitRegex.search('1234567890')
+		<_sre.SRE_Match object; span=(0, 3), match='123'>
+
+	You can see, this time, it matched the smallest possible string, "123". And this is a pattern happens a lot in Regular Expressions syntax, If you add a "?", it'll do a Non-Greedy Match; where as, without it, it'll just do a normal Greedy Match, where it tries to match the longest as possible string. 
+
+
 RECAP:
--
+	
+- The ? says the group matches zero or one times.
+- The * says the group matches zero or more times.
+- The + says the group matches one or more times. 
+- The curly braces can match a specific number of times. 
+- The curly braces with two numbers matches a minimum and maximum number of times. 
+- Leaving out the first or second number in the curly braces says there is no minimum or maximum.
+- Greedy matching match the longest string possible, nongryeedy matching match the shortest string possible. 
+- Putting a question mark after the curly braces makes it do a nongryeedy match. 
