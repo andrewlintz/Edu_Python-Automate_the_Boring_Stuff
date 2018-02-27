@@ -1,0 +1,19 @@
+Lesson 26: Regex Character Classes and the findall() Method
+
+Key Words:
+1.
+2.
+3.
+
+
+1.
+
+
+2. (:)
+
+
+3. (:)
+
+
+RECAP:
+-
